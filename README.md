@@ -77,6 +77,8 @@ Specifically applications that are "federated".
 see: https://en.wikipedia.org/wiki/Federated_architecture
 
 
+# What?
+
 
 
 In a distributed database, we need a way of creating IDs
@@ -84,11 +86,15 @@ for the records without any risk of "collision".
 
 There are _many_ ways of creating unique IDs.
 
-Consider the following
+Consider the following URL (_featuring a **UUID**_):
 
 location-app.com/venues/123e4567-e89b-12d3-a456-426655440000
 
+It doesn't exactly roll off the tongue.
+
 append-only log.
+
+# How?
 
 
 
@@ -105,9 +111,16 @@ def deps do
 end
 ```
 
+## Usage
+
+
+<!--
+
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/rid](https://hexdocs.pm/rid).
+be found at [https://hexdocs.pm/rid](https://hexdocs.pm/rid)
+
+-->
 
 
 # Research, Background & Relevant Reading
@@ -116,11 +129,20 @@ be found at [https://hexdocs.pm/rid](https://hexdocs.pm/rid).
 https://perishablepress.com/stop-using-unsafe-characters-in-urls/
 + Safe characters for friendly URLs:
 https://stackoverflow.com/questions/695438/safe-characters-for-friendly-url
++ When to use non-sequential Strings as IDs instead of Integers:
+https://softwareengineering.stackexchange.com/questions/361395/when-use-a-long-string-id-instead-of-a-integer
 + Raft consensus: https://en.wikipedia.org/wiki/Raft_(computer_science)
 
-<br />
 
-## Instagram's (_Apparently_) Random String IDs
+<br /><br />
+
+
+## Real World Examples
+
+There are _many_ Apps and Services that use Strings as IDs instead of Integers.
+
+
+### Instagram's (_Apparently_) Random String IDs
 
 From the start Instagram got _several_ things "right" in
 both their iOS App, their backend App/API design and infrastructure choices.
@@ -128,15 +150,15 @@ We will be producing a _separate_ "case study" on Instragram
 in the _near_ future, meanwhile let's focus on one thing: the post IDs.
 
 The **_first_ image** posted on Instagram (16th July 2010)
-was taken by
-[Kevin Systrom](https://en.wikipedia.org/wiki/Kevin_Systrom)
-it features a dog in Mexico near a taco stand,
-with a guest appearance by his girlfriend’s foot:
+was by
+[Kevin Systrom](https://en.wikipedia.org/wiki/Kevin_Systrom).
+It features a dog in Mexico near a taco stand,
+with a guest appearance by his girlfriend’s foot wearing a flip-flop:
 https://www.instagram.com/p/C/
 ![first-instagram-post](https://user-images.githubusercontent.com/194400/49203797-7e5b5880-f3a1-11e8-9c7c-c85ee9622994.png)
 
 > In many ways this image is _representative_ of the social network as a whole,
-it uses the "**X-PRO2**" filter and is _insignificant_ to _most_
+it uses the "**X-PRO2**" filter and is _totally insignificant_ to _most_
 of the **99,704 people** who "**liked**" it, unless these almost 100K people
 are general "dog-lovers" who "like" _all/any_ dogs ... 💭
 
@@ -146,17 +168,23 @@ The `/p/` part refers to the
 "posts controller" in the
 (_[Django](https://quora.com/What-programming-languages-are-used-at-Instagram)
 -based_) Web App. <br />
-The `/C/` is the the `ID` of the post.
+The `C` is the the `ID` of the post. Yes, `String` is used for "ID"!
 [Mike Krieger](https://firstround.com/review/how-instagram-co-founder-mike-krieger-took-its-engineering-org-from-0-to-300-people)
 chose to use a **`String`** for the Post IDs
 (_rather than an_ `Auto-incrementing Integer`)
-for a _three_ simple reasons:  <br />
-1. Strings can be shorter than Ints because the
+for _three_ simple reasons:  <br />
+1. Strings can be shorter than Ints because the character set is larger.
+if the character set is just numeric digits `0123456789` then
+the number of potential IDs or "posts" corresponds to the length of the ID.
+There are only **9999** potential **IDs** if the ID length is 4 characters
+(10^4 = 10k, subtract the 0000 ID which would never be used
+  in an auto-incrementing database that starts at 1)
 2. Strings **_obscure_ how many posts** have been made on the network
 (_whereas an **Int** would make it
   **immediately obvious** how **popular** the network was!_)
 3. Strings make it more difficult to **guess** the ID of the next post
-"scrape" the site's content.
+"scrape" the site's content. This is also _good_ for privacy again because
+nobody can _guess_ a _private_ Post's ID.
 
 Sure enough, the **_second_ post** on Instagram is:
 https://www.instagram.com/p/D/
@@ -215,8 +243,8 @@ https://en.wikipedia.org/wiki/Base64#Base64_table <br />
 ![base64-character-set](https://user-images.githubusercontent.com/194400/49223407-9bf6e500-f3d6-11e8-8241-84fdc924c64d.png)
 
 The key distinction between the Instagram ID charset and Base64,
-is that Base64 allows the _forward slash_ (`/`) character
-which is a reserved character in URLs.
+is that Base64 allows the _forward slash_ (`/`) and _plus_ (`+`) characters
+which are both reserved characters in URLs.
 Which makes us think that Instagram's UIs are more along the lines of
 [RFC 3986](https://www.ietf.org/rfc/rfc3986.txt):
 ```sh
@@ -224,23 +252,27 @@ Which makes us think that Instagram's UIs are more along the lines of
 ```
 **66 characters**.
 
-With a 66 character set and 4 char ID length
+With a 66 character set and 4 charter ID length
 there are **66^4** = **18,974,736** IDs.
 
-With an ID length of 11 (_as is the case in the most recent insta posts_),
-the potential number of posts is **66^11** = **103,510,234,140,112,521,216** ...
+With an ID length of **11** (_as is the case in the most recent insta posts_),
+the _potential_ number of IDs is **66^11** = **103,510,234,140,112,521,216** ...
 **103 _Quintillion_**.
 Enough for _each_ of the Earth's 7.5 Billion people
 to post **14 Billion images**.
 
-It appears that Instagram have inflated their ID length in order to
+It appears that Instagram have ~~inflated~~ raised their ID length in order to
 achieve objectives 2 and 3 (_described above_),
 they don't want anyone to know how much
 activity there _really_ is on the network.
+
+Instagram are using a distributed system for creating their post IDs.
 
 
 
 
 # Notes
 
-<sup>1</sup> The quality of being "typeable"
+<sup>1</sup> The quality of being "typeable" _specifically_ on a mobile device,
+means that a human being can type an ID in a _reasonable_ amount of time
+(_e.g: fewer than 7 seconds_) and
