@@ -16,7 +16,7 @@ defmodule Hash do
 
   Returns String hash of desired length.
   """
-  def make(input, length \\ 13) do
+  def make(input, length \\ 22) do
     # dogma requires this extra line ... =(
     hash = :crypto.hash(:sha512, input)
     # so alpha numeric with UPPERCASE lowercase and 0-9
@@ -28,3 +28,5 @@ defmodule Hash do
     |> String.slice(0..(length - 1))
   end
 end
+
+IO.puts Rid.hello("Elixir")

@@ -12,7 +12,7 @@ defmodule Rid do
       :world
 
   """
-  def hello do
-    :world
+  def hello(name) do
+    "Hello, #{name}!"
   end
 end
