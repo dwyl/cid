@@ -3,6 +3,10 @@
 **`cid`** ("content id") is a _human-friendly_
 unique ID function built for use with mobile-first/distributed apps.
 
+<!-- add link to example of single-server setup using cid!
+> **Note**: `cid` can also/easily be used for centralised apps
+which do not require offline/client support.  
+-->
 
 # Why?
 
@@ -22,7 +26,7 @@ and allow us to build a "checksum" mechanism
 into our app that will _verify_ records created by any device
 to allow an _effortless_ distributed/decentralised system.
 
-If this may all sound "esoteric" if you have not yet built
+This may all sound "esoteric" if you have not yet built
 an "offline-first" application. Our hope is that this `README.md`
 will _clarify_ our _reasoning_ for "_reinventing the wheel_".
 
@@ -170,6 +174,58 @@ https://asana.com/developers/news/string-ids
 
 There are _many_ Apps and Services that use Strings as IDs instead of Integers.
 
+### Google URL Shortener
+
+While the
+[Google URL Shortener](https://en.wikipedia.org/wiki/Google_URL_Shortener)
+https://goo.gl
+has recently been discontinued<sup>2</sup>,
+you are likely to continue seeing it's short links
+around the web for the foreseeable future
+and it still serves as an insightful case study.
+
+The https://goo.gl service is a basic URL shortener
+that allows people (_registered Google users_)
+to paste links into an input field
+and when the "SHORTEN URL" (_shouty_) button is clicked/tapped,
+a much shorter URL is created:
+
+![image](https://user-images.githubusercontent.com/194400/49341817-b5a06280-f64a-11e8-9db2-db0e81661679.png)
+
+e.g: https://goo.gl/nKXAdA
+
+When Google announced they were shutting down the service (_for new links_),
+I downloaded the CSV of the links I created for _one_ of my accounts:
+![image](https://user-images.githubusercontent.com/194400/47958195-6ec53b80-dfbe-11e8-84d1-3269f6d2aba7.png)
+
+Notice how the IDs are all 6 alphanumeric characters?
+The "character set" is:
+```sh
+0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz
+```
+I've never seen a goo.gl short URL with a special character.
+But since it's a closed-source product, there's no way of knowing for sure.
+
+With a 63 character set, and an ID length of 6,
+there are **63^6** = 62,523,502,209 **62.5 Billion IDs**
+It was _unlikely_ Google was going to "run out" of IDs,
+they must have decided to shut down the service
+because it was being used for "SPAM" and "PHISHING" ...
+e.g: https://lifehacker.com/5708311/new-virus-watch-out-for-googl-links-on-twitter
+
+People with unethical motives is
+[why we can't have "nice things"!](https://youtu.be/2oBPK_iqBZc)
+
+#### Learning Point
+
+If you have a simple Blog or Site with a few thousand links,
+you can _easily_ use short URLs with **3 characters**.
+**63^3** = 250,047 **250K IDs** is _enough_ for even a _popular_ blog!
+and **63^4** = 15,752,961 **15.7 Million IDs**
+is plenty for the first few years of a link sharing service!
+
+We will be integrating this knowledge into our App.
+
 
 ### Instagram's (_Apparently_) Random String IDs
 
@@ -305,3 +361,6 @@ Instagram are using a distributed system for creating their post IDs.
 <sup>1</sup> The quality of being "typeable" _specifically_ on a mobile device,
 means that a human being can type an ID in a _reasonable_ amount of time
 (_e.g: fewer than 7 seconds_) and
+
+<sup>2</sup> The list of Discontinued Google services continues to grow
+https://en.wikipedia.org/wiki/Category:Discontinued_Google_services
