@@ -1,12 +1,32 @@
-# `rid`
+# `cid`
 
-**`rid`** ("resource id") is a human-friendly (readable/typeable<sup>1</sup>)
-unique ID function built for use with distributed/decentralised apps.
-
-
+**`cid`** ("content id") is a _human-friendly_
+unique ID function built for use with mobile-first/distributed apps.
 
 
 # Why?
+
+We needed a way of running our App(s) across multiple servers/devices
+without fear/risk of collisions in the IDs of records.
+
+The goal is to allow records to be created _offline_ (_e.g: on a mobile device_)
+with the ID generated on the _client_ and when the record is synched/saved
+to the server (database) it can be _verified_
+and the ID does not need to change.
+Furthermore because the ID is based
+
+We _could_ have used "_Ye olde_" **UUID** (_random/nondeterministic_)
+as the IDs and achieve the desired collision-avoidance,
+but we felt we could do _much_ better
+and allow us to build a "checksum" mechanism
+into our app that will _verify_ records created by any device
+to allow an _effortless_ distributed/decentralised system.
+
+If this may all sound "esoteric" if you have not yet built
+an "offline-first" application. Our hope is that this `README.md`
+will _clarify_ our _reasoning_ for "_reinventing the wheel_".
+
+## Context
 
 In a "basic" Relational Database
 (e.g: PostgreSQL, MySQL, MariaDB, etc.)
@@ -23,7 +43,6 @@ e.g. if there are currently 100 blog posts in the database,
 the server will assign the _next_ blog post the id **101**;
 there is no chance that it will create a `new` post with id **99**
 which would conflict with the post you wrote yesterday.
-
 
 
 ## Centralised = _Single_ Point of _Failure_
@@ -48,13 +67,18 @@ fails, _all_ users are affected by the outage
 for as long as it takes the team to revive it.
 
 > Having witnessed ***Distributed Denial of Service*** ("DDoS") attacks
-_first-hand_
+_first-hand_, we have _experienced_ the pain of having to recover
+crashed servers with corrupted mission-critical customer data; it's bleak.
 Yes, there are services like
 [CloudFlare](https://www.cloudflare.com/ddos)
 or
 [Imperva](https://www.incapsula.com/ddos-protection-services.html)
 which promise to _mitigate_ against DDoS
-the _reality_ is that they are only providing "frontend" protection.
+the _reality_ is that they are only providing "frontend" protection,
+if for _any_ reason your _single-server_ database was to crash,
+your app will still be out-of-action regardless of having CloudFlare.
+
+
 
 
 # Who?
@@ -94,6 +118,8 @@ It doesn't exactly roll off the tongue.
 
 append-only log.
 
+One of our ... readable/typeable[<sup>1</sup>](#notes)
+
 # How?
 
 
@@ -131,8 +157,11 @@ https://perishablepress.com/stop-using-unsafe-characters-in-urls/
 https://stackoverflow.com/questions/695438/safe-characters-for-friendly-url
 + When to use non-sequential Strings as IDs instead of Integers:
 https://softwareengineering.stackexchange.com/questions/361395/when-use-a-long-string-id-instead-of-a-integer
++ Running out of numeric IDs in JavaScript!
+https://asana.com/developers/news/string-ids
++ Clean URL: https://en.wikipedia.org/wiki/Clean_URL
++ URL Slugs: https://seo-hacker.com/url-seo-tutorial
 + Raft consensus: https://en.wikipedia.org/wiki/Raft_(computer_science)
-
 
 <br /><br />
 
@@ -245,7 +274,7 @@ https://en.wikipedia.org/wiki/Base64#Base64_table <br />
 The key distinction between the Instagram ID charset and Base64,
 is that Base64 allows the _forward slash_ (`/`) and _plus_ (`+`) characters
 which are both reserved characters in URLs.
-Which makes us think that Instagram's UIs are more along the lines of
+Which makes us think that Instagram's IDs are more along the lines of
 [RFC 3986](https://www.ietf.org/rfc/rfc3986.txt):
 ```sh
 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz-~.
