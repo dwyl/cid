@@ -30,7 +30,7 @@ This may all sound "esoteric" if you have not yet built
 an "offline-first" application. Our hope is that this `README.md`
 will _clarify_ our _reasoning_ for "_reinventing the wheel_".
 
-## Context
+## Context
 
 In a "basic" Relational Database
 (e.g: PostgreSQL, MySQL, MariaDB, etc.)
@@ -124,6 +124,23 @@ append-only log.
 
 One of our ... readable/typeable[<sup>1</sup>](#notes)
 
+
+
+```
+123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz
+```
+With a **56** characters in the set,
+we can create IDs of the following lengths:<br />
++ 2: **56^2** = 3,136
++ 3: **56^3** = 175,616
++ 4: **56^4** = 9,834,496
++ 5: **56^5** = 550,731,776
+
+Crucially, we can create a system where the IDs start out at 2 characters
+and increase gradually as required
+(_similar to how Instagram grew their IDs as they scaled, see below_).
+
+
 # How?
 
 
@@ -131,17 +148,17 @@ One of our ... readable/typeable[<sup>1</sup>](#notes)
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `rid` to your list of dependencies in `mix.exs`:
+by adding `cid` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:rid, "~> 0.1.0"}
+    {:cid, "~> 0.1.0"}
   ]
 end
 ```
 
-## Usage
+## Usage
 
 
 <!--
@@ -170,7 +187,7 @@ https://asana.com/developers/news/string-ids
 <br /><br />
 
 
-## Real World Examples
+## Real World Examples
 
 There are _many_ Apps and Services that use Strings as IDs instead of Integers.
 
@@ -190,31 +207,32 @@ to paste links into an input field
 and when the "SHORTEN URL" (_shouty_) button is clicked/tapped,
 a much shorter URL is created:
 
-![image](https://user-images.githubusercontent.com/194400/49341817-b5a06280-f64a-11e8-9db2-db0e81661679.png)
+![googl-url-shortner-form](https://user-images.githubusercontent.com/194400/49341817-b5a06280-f64a-11e8-9db2-db0e81661679.png)
 
 e.g: https://goo.gl/nKXAdA
 
 When Google announced they were shutting down the service (_for new links_),
 I downloaded the CSV of the links I created for _one_ of my accounts:
-![image](https://user-images.githubusercontent.com/194400/47958195-6ec53b80-dfbe-11e8-84d1-3269f6d2aba7.png)
 
-Notice how the IDs are all 6 alphanumeric characters?
+![googl-url-shor-links](https://user-images.githubusercontent.com/194400/47958195-6ec53b80-dfbe-11e8-84d1-3269f6d2aba7.png)
+
+Notice how the IDs are all **6 alphanumeric characters**?
 The "character set" is:
 ```sh
 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz
 ```
-I've never seen a goo.gl short URL with a special character.
+I've never seen a goo.gl short URL with a special character. <br />
 But since it's a closed-source product, there's no way of knowing for sure.
 
 With a 63 character set, and an ID length of 6,
-there are **63^6** = 62,523,502,209 **62.5 Billion IDs**
+there are **63^6** = 62,523,502,209 **62.5 Billion IDs**. <br />
 It was _unlikely_ Google was going to "run out" of IDs,
 they must have decided to shut down the service
 because it was being used for "SPAM" and "PHISHING" ...
 e.g: https://lifehacker.com/5708311/new-virus-watch-out-for-googl-links-on-twitter
 
-People with unethical motives is
-[why we can't have "nice things"!](https://youtu.be/2oBPK_iqBZc)
+People with unethical motives is reason
+[_why we can't have "nice things"_!](https://youtu.be/2oBPK_iqBZc)
 
 #### Learning Point
 
@@ -226,6 +244,7 @@ is plenty for the first few years of a link sharing service!
 
 We will be integrating this knowledge into our App.
 
+<br /> <hr /> <br />
 
 ### Instagram's (_Apparently_) Random String IDs
 
@@ -340,9 +359,10 @@ Which makes us think that Instagram's IDs are more along the lines of
 With a 66 character set and 4 charter ID length
 there are **66^4** = **18,974,736** IDs.
 
-With an ID length of **11** (_as is the case in the most recent insta posts_),
+With an ID length of **11**
+(_as is the case in the most recent insta posts_), <br />
 the _potential_ number of IDs is **66^11** = **103,510,234,140,112,521,216** ...
-**103 _Quintillion_**.
+**103 _Quintillion_**. <br />
 Enough for _each_ of the Earth's 7.5 Billion people
 to post **14 Billion images**.
 

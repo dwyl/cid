@@ -19,9 +19,8 @@ defmodule Hash do
   def make(input, length \\ 22) do
     # dogma requires this extra line ... =(
     hash = :crypto.hash(:sha512, input)
-    # so alpha numeric with UPPERCASE lowercase and 0-9
-    # "ambiguous" chars
-    # 0 index so length needs decrement
+    # so alpha numeric characters with UPPERCASE, lowercase and 0-9
+    # "ambiguous" chars are removed:
     hash
     |> Base.encode64()
     |> String.replace(~r/[Il0oO=\/\+]/, "", global: true)
@@ -29,4 +28,4 @@ defmodule Hash do
   end
 end
 
-IO.puts Rid.hello("Elixir")
+IO.puts Hash.make("Elixir")
