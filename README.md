@@ -126,6 +126,7 @@ One of our ... readable/typeable[<sup>1</sup>](#notes)
 
 
 
+
 ```
 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz
 ```
@@ -135,6 +136,8 @@ we can create IDs of the following lengths:<br />
 + 3: **56^3** = 175,616
 + 4: **56^4** = 9,834,496
 + 5: **56^5** = 550,731,776
+...
++ 22:
 
 Crucially, we can create a system where the IDs start out at 2 characters
 and increase gradually as required
@@ -183,8 +186,13 @@ https://asana.com/developers/news/string-ids
 + Clean URL: https://en.wikipedia.org/wiki/Clean_URL
 + URL Slugs: https://seo-hacker.com/url-seo-tutorial
 + Raft consensus: https://en.wikipedia.org/wiki/Raft_(computer_science)
++ What are the odds of collisions for a hash function with 256-bit output?
+https://crypto.stackexchange.com/questions/39641/what-are-the-odds-of-collisions-for-a-hash-function-with-256-bit-output
++ Hash Collision Probabilities:
+https://preshing.com/20110504/hash-collision-probabilities
 
-<br /><br />
+
+<br /> <hr /> <br />
 
 
 ## Real World Examples
