@@ -11,4 +11,8 @@ defmodule CidTest do
     assert Cid.make(map) == "GdrVnsLSdxRphXgQgNsmq1FDyRXAySXT"
   end
 
+  test "Cid.make(\"hello world\")" do
+    assert Cid.make("hello world") == "MJ7MSJwS1utMxA9QyQLytNDtd5RGnx6m"
+  end
+
 end

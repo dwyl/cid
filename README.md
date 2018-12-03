@@ -147,7 +147,6 @@ and increase gradually as required
 # How?
 
 
-
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
@@ -162,6 +161,47 @@ end
 ```
 
 ## Usage
+
+Right now there are only two use cases for `cid` generation
+which are inline with what we need for our _current_ App/project:
+
+### `cid` from a `String`
+
+Given that under-the-hood `cid` is "_just_" using SHA512 hash,
+the _output_ will _always_ be the same. It's simple, that's the point.
+
+```
+require Cid
+
+Cid.make("hello world") # > "MJ7MSJwS1utMxA9QyQLytNDtd5RGnx6m" (always!)
+```
+
+A real world use case for
+wanting a `cid` based on a `String`
+is a URL shortener.
+For example you have a long URL:
+https://github.com/dwyl/phoenix-ecto-append-only-log-example
+the `cid` of this url is:
+
+```
+require Cid
+
+Cid.make("https://github.com/dwyl/phoenix-ecto-append-only-log-example") # > "gVSTedHFGBetxyYib9mBQsjtZj4dJjQe"
+```
+
+We can then create a URLs table in our URL shortening app/service such that:
+
+| `inserted_at ` | **`URL`** (PK) | `cid` | `short` |
+| ----------- | ----------- | ----------- | ----------- |
+| 1541609554 | https://github.com/dwyl/phoenix-ecto-append-only-log-example | gVSTedHFGBetxyYib9mBQsjtZj4dJjQe | gVS |
+
+So the "short" url would be
+[dwyl.co/gVS](https://github.com/dwyl/phoenix-ecto-append-only-log-example)
+
+
+### `cid` from a `Map`
+
+
 
 
 <!--
