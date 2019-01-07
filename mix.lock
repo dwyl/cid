@@ -1,0 +1,3 @@
+%{
+  "ex_multihash": {:hex, :ex_multihash, "2.0.0", "7fb36f842a2ec1c6bbba550f28fcd16d3c62981781b9466c9c1975c43d7db43c", [:mix], [], "hexpm"},
+}

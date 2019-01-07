@@ -21,15 +21,13 @@ defmodule Cid do
   end
 
   def make(input, length \\ 32) do
-    # dogma requires this extra line ... =(
-    hash = :crypto.hash(:sha512, input)
-    # so alpha numeric characters with UPPERCASE, lowercase and 0-9
-    # "ambiguous" chars are removed:
-    hash
+    hash1 = :crypto.hash(:sha512, input)
+    {:ok, <<_multihash_code, _length, hash2::binary>>} = Multihash.encode(:sha2_512, hash1)
+
+    hash2
     |> Base.encode64()
     |> String.replace(~r/[Il0oO=\/\+]/, "", global: true)
     |> String.slice(0..(length - 1))
-    # |> String.length()
   end
 
   def stringify_map_values(input_map) do
