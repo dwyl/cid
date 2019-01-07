@@ -461,7 +461,7 @@ the other 2 are from late 2018. As you can see, there is no way to tell the
 difference without actually clicking the link.
 
 This shows that YouTube was planning for scale from day one. It's also why there
-is no way of telling just how many videos in on YouTube.
+is no way of telling just how many videos are on YouTube.
 
 # Notes
 
