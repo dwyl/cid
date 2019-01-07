@@ -421,8 +421,47 @@ activity there _really_ is on the network.
 
 Instagram are using a distributed system for creating their post IDs.
 
+<br /> <hr /> <br />
 
+### YouTube
 
+Youtube is another example of this. Let's look at a few of the URLS for videos
+hosted on the site.
+
+https://www.youtube.com/watch?v=fYyDQBG_tYc <br />
+https://www.youtube.com/watch?v=jNQXAC9IVRw <br />
+https://www.youtube.com/watch?v=g5eGKw4TWbU
+
+Notice all the ids are 11 alphanumeric characters. The character set appears to
+be the same set as the one used by the Google URL shortener
+```
+0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz
+```
+
+YouTube is a site with **1.9 billion users**. There is no way of knowing for
+sure but it is estimated that there are somewhere between **5-7 billion videos**
+currently on the site and that number is continuously growing as over **300
+hours of video** is uploaded to the site **every minute**.
+
+This number of videos is almost hard to wrap your head around and you might
+think that they would have to change their IDs at some point to reflect the
+number of videos on the site. Well, let's have a look at that.
+
+With a character set of 63 and ID length of 11 there are **63^11** =
+**62,050,608,388,552,824,880** IDs possible. **62 _Quintillion_**. To try and
+give this number some context, there are more possilbe IDs than the estimated
+number of grains of sand on earth. Close to **9 times more!!!**
+
+We can safely say that YouTube will not be running out of video IDs anytime
+soon.
+
+YouTube, unlike Instagram, has implemented this system since the first upload to
+the site. In fact one of the 3 links above is the first ever YouTube video and
+the other 2 are from late 2018. As you can see, there is no way to tell the
+difference without actually clicking the link.
+
+This shows that YouTube was planning for scale from day one. It's also why there
+is no way of telling just how many videos are on YouTube.
 
 # Notes
 
