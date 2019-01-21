@@ -143,6 +143,33 @@ Crucially, we can create a system where the IDs start out at 2 characters
 and increase gradually as required
 (_similar to how Instagram grew their IDs as they scaled, see below_).
 
+The [multiformats](https://multiformats.io/) project [provides a description](https://github.com/multiformats/cid) of
+CIDs.
+
+A Content IDentifier is a unique Id which is created based on the content
+this Id references.
+
+A CID is composed of 4 main parts:
+- The mulibase
+- The CID format version - There are currenty 2 versions CIDv0 CIDv1
+- The multicodec
+- The multihash
+
+With these 4 parts, the CID not only references a specific content (with the multihash part) but it also
+provides the information on **how** it has created the references by telling us
+which tools way used (multibase, cid version and multicodec)
+
+exmpale of a CID: `zb2rhe5P4gXftAwvA4eXQ5HJwsER2owDyS9sKaQRRVQPn93bA`
+
+## Multibase
+https://github.com/multiformats/multibase
+
+## Multicodec
+https://github.com/multiformats/multicodec
+
+
+## Multihash
+https://github.com/multiformats/multihash
 
 # How?
 
