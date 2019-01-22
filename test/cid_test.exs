@@ -15,4 +15,12 @@ defmodule CidTest do
     assert Cid.make("hello world") == "MJ7MSJwS1utMxA9QyQLytNDtd5RGnx6m"
   end
 
+  test "Cid.decode cidv0 format" do
+    assert Cid.decode("QmPZ9gcCEpqKTo6aq61g2nXGUhM4iCL3ewB6LDXZCtioEB") == {:ok, "cidv0"}
+  end
+
+  test "Cid.decode cidv1 format" do
+    assert Cid.decode("wrongcid") == {:ok, "cidv1"}
+  end
+
 end
