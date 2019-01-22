@@ -77,48 +77,100 @@ Yes, there are services like
 [CloudFlare](https://www.cloudflare.com/ddos)
 or
 [Imperva](https://www.incapsula.com/ddos-protection-services.html)
-which promise to _mitigate_ against DDoS
-the _reality_ is that they are only providing "frontend" protection,
-if for _any_ reason your _single-server_ database was to crash,
+which promise to _mitigate_ against DDoS attacks,
+however the _reality_ is that they are only providing "frontend" protection;
+if for _any_ reason your _single-server_ database was to _crash_,
 your app will still be out-of-action regardless of having CloudFlare.
 
 
+## Why _Decentralise_?
 
+If you have _never_ had the experience of being _offline_
+or the service you are using being interrupted,
+then you either live in hyper-connected Paolo Alto
+(_with backup/redundant networks and city-wide WiFi_)
+or simply don't _use_ the Internet "_enough_" to notice the outages.
 
-# Who?
+All the work we do depends on having access to the Internet.
+We need to _systematically_ `reduce` that dependency.
 
-If you are building apps that will use a _single_ database instance
-for whatever reason (_e.g: they aren't very "complex"
-or don't need to be distributed or work offline-first_)
-keep enjoying the simplicity and maybe come back to this
-later when you feel you _need_ this functionality.
-
-We feel that _most_ apps can benefit
-from being decentralised/distributed by default
-because it means they work "offline" when any element fails
-and data can easily be "synched" when connection is re-established.
-
-Network and hardware ***fault-tolerance*** is a ***essential***
+Network and hardware ***fault-tolerance*** is ***essential***
 for many apps and enables a whole _new_ "class" of apps to be created.
 
 Specifically applications that are "federated".
 see: https://en.wikipedia.org/wiki/Federated_architecture
 
+The Apps that we (@dwyl) are creating
+_must_ be decentralised;
+there _cannot_ be a single point of failure.
+
+Decentralisation is not just "_philosophical_" argument,
+as creative technologists we are _directly_ responsible
+for the technology we create.
+The lives of _billions_ of people are at stake
+if we continue to _allow_ the centralised _control_
+of our communication networks.
+
+If you believe in
+the universal human right to
+[privacy](https://www.un.org/en/universal-declaration-human-rights)
+[Article 12]
+_freedom_ from oppression
+and the [Golden Rule](https://en.wikipedia.org/wiki/Golden_Rule),
+then _logically_ this is the _only_ thing to do.
+
+
+
+# Who?
+
+Anyone who is techno-curious about the future of the Internet
+and wants to _understand_ the way decentralised applications
+derive the IDs for content.
+
+We feel that _most_ apps can benefit
+from being decentralised/distributed by `default`
+because it means they work "***offline***" when any element fails
+and data can easily be "synched" (_and verified_)
+when connection is re-established.
+
+If you want to build a
+**mobile/offline-first _progressive_ mobile web app** (PWA)
+that **feels _native_** on both Android and iOS,
+then _understanding_ CIDs is a good place to start.
+
+> If you are building apps that will use a _single_ database instance
+for whatever reason (_e.g: they aren't very "complex"
+or don't need to be distributed or work offline-first_)
+keep enjoying the simplicity and maybe come back to this
+later when you feel you _need_ this functionality.
+
 
 # What?
 
-
-
 In a distributed database, we need a way of creating IDs
 for the records without any risk of "collision".
+We _also_ need a _consistent_ way of creating IDs both on the server
+and on the client (_to allow for offline-first distributed apps_).
 
-There are _many_ ways of creating unique IDs.
+### Why _Not_ Use UUIDs?
 
-Consider the following URL (_featuring a **UUID**_):
+There are _many_ ways of creating unique IDs,
+the most popular has historically been UUID (Universally Unique Identifier)
+https://en.wikipedia.org/wiki/Universally_unique_identifier
 
-location-app.com/venues/123e4567-e89b-12d3-a456-426655440000
+A UUID is a 128-bit number usually represented as base16 (_hexadecimal_)
+for example:
+```
+85594564-5be7-465f-b007-0fada384ed44
+```
+(via https://www.uuidgenerator.net )
 
-It doesn't exactly roll off the tongue.
+Consider the following URL
+(_featuring a **UUID** as the `id` of a record_):
+
+location-app.com/venues/85594564-5be7-465f-b007-0fada384ed44
+
+It doesn't exactly roll off the tongue. 🙄
 
 append-only log.
 
@@ -189,14 +241,36 @@ require Cid
 Cid.make("https://github.com/dwyl/phoenix-ecto-append-only-log-example") # > "gVSTedHFGBetxyYib9mBQsjtZj4dJjQe"
 ```
 
-We can then create a URLs table in our URL shortening app/service such that:
+We can then create a URLs table
+in our URL shortening app/service
+with the following entry:
 
 | `inserted_at ` | **`URL`** (PK) | `cid` | `short` |
 | ----------- | ----------- | ----------- | ----------- |
-| 1541609554 | https://github.com/dwyl/phoenix-ecto-append-only-log-example | gVSTedHFGBetxyYib9mBQsjtZj4dJjQe | gVS |
+| 1541609554 | https://github.com/dwyl/phoenix-ecto-append-only-log-example | gVSTedHFGBetxyYib9mBQsjtZj4dJjQe | gV |
 
 So the "short" url would be
-[dwyl.co/gVS](https://github.com/dwyl/phoenix-ecto-append-only-log-example)
+[dwyl.co/gV](https://github.com/dwyl/phoenix-ecto-append-only-log-example)
+
+This is a relatively "boring" but still perfect _valid_ use case.
+If someone attempts to create a short URL for this (_same_) _long_ URL,
+the URL shortening app will simply return
+[dwyl.co/gV](https://github.com/dwyl/phoenix-ecto-append-only-log-example)
+the _same_ short URL each time.
+
+The _reason_ we can abbreviate the URL to just `gV`
+is because our SHORT URL service has a _centralised_ Database/store.
+If we wanted to run a _decentralised_ content addressing system,
+we would simply link to the _full_ `cid`:
+[dwyl.co/gVSTedHFGBetxyYib9mBQsjtZj4dJjQe](https://github.com/dwyl/phoenix-ecto-append-only-log-example)
+
+Where the chance of `cid` collision
+is less than 1 in "the number of
+atoms in the Universe".
+If we generated 1 Billion CIDs per _second_
+for the next Trillion years there would
+still be less than a **0.001%** chance of collision.<sup>3</sup>
+
 
 
 ### `cid` from a `Map`
@@ -228,8 +302,12 @@ https://asana.com/developers/news/string-ids
 + Raft consensus: https://en.wikipedia.org/wiki/Raft_(computer_science)
 + What are the odds of collisions for a hash function with 256-bit output?
 https://crypto.stackexchange.com/questions/39641/what-are-the-odds-of-collisions-for-a-hash-function-with-256-bit-output
++ Collision (computer science):
+https://en.wikipedia.org/wiki/Collision_(computer_science)
 + Hash Collision Probabilities:
 https://preshing.com/20110504/hash-collision-probabilities
++ UUID collisions:
+https://softwareengineering.stackexchange.com/questions/130261/uuid-collisions
 
 
 <br /> <hr /> <br />
@@ -471,3 +549,26 @@ means that a human being can type an ID in a _reasonable_ amount of time
 
 <sup>2</sup> The list of Discontinued Google services continues to grow
 https://en.wikipedia.org/wiki/Category:Discontinued_Google_services
+
+<sup>3</sup> How to calculate collision probability in an ID system?
+
+
+
+https://en.wikipedia.org/wiki/Universally_unique_identifier
+![image](https://user-images.githubusercontent.com/194400/49408702-47949200-f755-11e8-9d25-bb31808ffc21.png)
+
+
+<!--
+```
+# consider the following
+iex> {:ok, buff} = "C56A4180-65AA-42EC-A945-5FD21DEC0538"
+  |> String.replace("-", "")
+  |> Base.decode16
+iex> buff |> Base.encode64
+# "xWpBgGWqQuypRV/SHewFOA==" (22 characters + 2 "=" signs as "padding")
+```
+-->
+
+With a Base16 character set and **32 character** of ID length,
+
+![base16-32-chars-probability](https://user-images.githubusercontent.com/194400/49407836-f2a34c80-f751-11e8-9d61-694c139808fc.png)
