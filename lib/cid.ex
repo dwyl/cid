@@ -35,4 +35,39 @@ defmodule Cid do
     |> Enum.map(fn (x) -> Map.get(input_map, x) end)
     |> Enum.join("")
   end
+
+  def encodeCid(data) do
+    # CIDv1 is multibase - cid version - multicontent - multihash
+    # with base58btc - version 1 - protobuf - multihash (ie CIDv0)
+
+    # define all these value in hex, then concat them then encode with base58btc to get the cid
+
+    # table value is 0xz ie 57 in decimal (the last value of the charecter set in base58)
+    # see https://github.com/multiformats/multibase/blob/master/multibase.csv
+    base58btc = Integer.to_string(57, 16)
+    # 0 or 1
+    version1 = Integer.to_string(1, 16)
+    # protobuf is 0x50 in table https://github.com/multiformats/multicodec/blob/master/table.csv
+    protobuf = Integer.to_string(83,16)
+
+    multihash = get_multihash(data)
+
+    base58btc <> version1 <> protobuf <> multihash
+  end
+
+  def get_multihash(data) do
+    data
+    |> hash()
+    |> multihash()
+    |> encode()
+  end
+
+
+
+  def hash(data), do: :crypto.hash(:sha256, data)
+
+  def multihash(digest), do: Multihash.encode(:sha2_256, digest)
+
+  def encode({:ok, multihash}), do: Base.encode16(multihash, case: :lower)
+
 end
