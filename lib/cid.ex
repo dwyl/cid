@@ -44,30 +44,39 @@ defmodule Cid do
 
     # table value is 0xz ie 57 in decimal (the last value of the charecter set in base58)
     # see https://github.com/multiformats/multibase/blob/master/multibase.csv
-    base58btc = Integer.to_string(57, 16)
-    # 0 or 1
-    version1 = Integer.to_string(1, 16)
-    # protobuf is 0x50 in table https://github.com/multiformats/multicodec/blob/master/table.csv
-    protobuf = Integer.to_string(83,16)
+    # base58btc = Integer.to_string(57, 16)
+    # # 0 or 1
+    # version1 = Integer.to_string(1, 16)
+    # # protobuf is 0x50 in table https://github.com/multiformats/multicodec/blob/master/table.csv
+    # protobuf = Integer.to_string(83,16)
+    #
+    # multihash = get_multihash(data)
+    #
+    # base58btc <> version1 <> protobuf <> multihash
 
-    multihash = get_multihash(data)
+    v1 = <<1>>
+    # protob = "P" # binary for "P" is <<80>>
+    raw = "U" # binary for "U" is <<85>>
+    {:ok, mh} =
+      data
+      |> hash()
+      |> multihash()
 
-    base58btc <> version1 <> protobuf <> multihash
+    concat = v1 <> raw <> mh
+    encode(concat) # convert this to base58 and then prefix "z"
   end
 
   def get_multihash(data) do
     data
     |> hash()
     |> multihash()
-    |> encode()
+    # |> encode()
   end
-
-
 
   def hash(data), do: :crypto.hash(:sha256, data)
 
   def multihash(digest), do: Multihash.encode(:sha2_256, digest)
 
   def encode({:ok, multihash}), do: Base.encode16(multihash, case: :lower)
-
+  def encode(binary), do: Base.encode16(binary, case: :lower)
 end
