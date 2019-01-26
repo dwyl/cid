@@ -327,3 +327,40 @@ iex> buff |> Base.encode64
 With a Base16 character set and **32 character** of ID length,
 
 ![base16-32-chars-probability](https://user-images.githubusercontent.com/194400/49407836-f2a34c80-f751-11e8-9d61-694c139808fc.png)
+
+# FAQs
+
+### How can we guarantee the the CID generated will be unique?
+
+We will be using the SHA256 hash which _to date_ has not incurred a single
+[hash collision](https://learncryptography.com/hash-functions/hash-collision-attack).
+256 bits of data is used by _most_ crypto currencies. Enough "smart people" have
+done the _homework_ on this for us not to worry about it.
+
+This is a good video on **256 bit** hash collision probability:
+[![image](https://user-images.githubusercontent.com/194400/49812120-9c8b6600-fd5c-11e8-9b1b-2c599d810f40.png)](https://youtu.be/S9JGmA5_unY)
+https://youtu.be/S9JGmA5_unY
+
+This video does not cover the "Birthday Paradox" see:
+https://github.com/nelsonic/nelsonic.github.io/issues/576. But again, for the
+purposes of this answer and indeed any project we are likely to work on in our
+_lifetime_, when dealing with 256 bit hashes, the chance of a "birthday attack"
+creating a collision is "_ignorable_".
+
+### If all unique content creates a unique CID, how do we update content in our database?
+
+The update version of content would be linked to the _previous_ version using a
+**`prev`** field the way it happens in IPFS, Etherium and Bitcoin (_so it will
+be **familiar** to people_)
+
+**`prev: previous_cid`** address _example_:
+
+| `inserted ` | **`cid`**(PK)<sup>1</sup> | **`name`** | **`address`** | **`prev`** |
+| ----------- | ----------- | ----------- | ----------- |-----|
+| 1541609554 | **gVSTedHFGBetxy** | Bruce Wane | 1007 Mountain Drive, Gotham | null |
+| 1541618643 | smnELuCmEaX42 | Bruce Wane | [Rua Goncalo Afonso, Vila Madalena, Sao Paulo, 05436-100, Brazil](https://www.tripadvisor.co.uk/ShowUserReviews-g303631-d2349935-r341872180-Batman_Alley-Sao_Paulo_State_of_Sao_Paulo.html "Batman Alley ;-)") | **gVSTedHFGBetxy** |
+
+When a row does _not_ have a **`prev`** value then we know it is the _first_
+time that content has been inserted into the database. When a **`prev`** value
+is defined in a row we know this is a new _version_ of a previously inserted
+content and we can "traverse the tree" to see all previous versions.
