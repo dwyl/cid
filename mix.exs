@@ -21,7 +21,9 @@ defmodule Rid.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_multihash, "~> 2.0"}
+      {:ex_multihash, "~> 2.0"},
+      {:jason, "~> 1.1"},
+      {:cid, git: "git@github.com:SimonLab/ex-cid.git"}
     ]
   end
 end
