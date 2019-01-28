@@ -1,42 +1,27 @@
-defmodule DwylCid do
-  defstruct [:a]
+defmodule ExCid do
   @moduledoc """
-  Returns a SHA512 transformed to Base64, remove ambiguous chars then sub-string
+  Provides a way for a user to turn a String, Map or Struct into a CID that
+  is identical to one what will be returned from IPFS if the same data is
+  added.
+
+  Currently only produces a default v1 CID.
+  Currently only uses the "raw" codec
+  Data provided must be under 256Kb in order for the CID to match the one
+  returned by IPFS
   """
 
   @doc """
-  make/2 create a SHA512 hash from the given input and return the require length
-  note: we remove "ambiguous" characters so _humans_ can type the hash without
-  getting "confused" this might not be required, but is to match the original
-  "Hits" implementation.
+  Returns a CID that identical to one returned by IPFS if given the same data.
+  Can take a String, Map or Struct as an argument.
 
-  ## Parameters
+  ## Examples
 
-  - input: String the string to be hashed.
-  - length: Number the length of string required
+    iex> ExCid.cid("hello")
+    "zb2rhcc1wJn2GHDLT2YkmPq5b69cXc2xfRZZmyufbjFUfBkxr"
 
-  Returns String hash of desired length.
+    iex> ExCid.cid(%{key: "value"})
+    "zb2rhkN6szWhAmBFjjP8RSczv2YVNLnG1tz1Q7FyfEp8LssNZ"
   """
-  def make(input) when is_map(input) do
-    input |> stringify_map_values |> make
-  end
-
-  def make(input, length \\ 32) do
-    hash1 = :crypto.hash(:sha512, input)
-    {:ok, <<_multihash_code, _length, hash2::binary>>} = Multihash.encode(:sha2_512, hash1)
-
-    hash2
-    |> Base.encode64()
-    |> String.replace(~r/[Il0oO=\/\+]/, "", global: true)
-    |> String.slice(0..(length - 1))
-  end
-
-  def stringify_map_values(input_map) do
-    Enum.sort(Map.keys(input_map)) # sort map keys for consistent ordering
-    |> Enum.map(fn (x) -> Map.get(input_map, x) end)
-    |> Enum.join("")
-  end
-
   def cid(value) do
     value
     |> create_multihash()
@@ -45,7 +30,7 @@ defmodule DwylCid do
 
   # if create_multihash is called with a struct, the struct is converted into a
   # map and then create_multihash is called again
-  defp create_multihash(%__MODULE__{} = struct) do
+  defp create_multihash(%_{} = struct) do
     struct
     |> Map.from_struct()
     |> create_multihash()
@@ -72,16 +57,20 @@ defmodule DwylCid do
 
   # if create_multihash is called something that is not a string, map or struct
   # then it returns an error.
-  defp create_multihash(_), do: {:error, "incorrect type"}
+  defp create_multihash(_), do: {:error, "invalid data type"}
 
+  # if an error is passed in return error message
   defp create_cid({:error, msg}), do: msg
 
+  # takes a multihash and retuns a CID
   defp create_cid(multihash) when is_binary(multihash) do
     multihash
     |> CID.cid!("raw", 1)
-    |> CID.encode()
+    |> CID.encode!()
   end
 
+  # adds new line to the end of string. (exists because all tests with ipfs
+  # appeared to do the same thing.)
   defp add_new_line(str) do
     str <> "\n"
   end
