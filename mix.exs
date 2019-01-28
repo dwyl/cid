@@ -23,7 +23,7 @@ defmodule Cid.MixProject do
     [
       {:ex_multihash, "~> 2.0"},
       {:jason, "~> 1.1"},
-      {:cid, git: "git@github.com:SimonLab/ex-cid.git"}
+      {:basefiftyeight, "~> 0.1.0"} # Currenly building our own version of this here https://git.io/fhPaK. Can replace when it is ready
     ]
   end
 end
