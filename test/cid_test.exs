@@ -1,4 +1,4 @@
-defmodule ExCidTest do
+defmodule CidTest do
   use ExUnit.Case
   doctest Cid
 
