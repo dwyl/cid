@@ -1,4 +1,4 @@
-defmodule ExCid do
+defmodule Cid do
   @moduledoc """
   Provides a way for a user to turn a String, Map or Struct into a CID that
   is identical to one what will be returned from IPFS if the same data is
@@ -16,10 +16,10 @@ defmodule ExCid do
 
   ## Examples
 
-    iex> ExCid.cid("hello")
+    iex> Cid.cid("hello")
     "zb2rhcc1wJn2GHDLT2YkmPq5b69cXc2xfRZZmyufbjFUfBkxr"
 
-    iex> ExCid.cid(%{key: "value"})
+    iex> Cid.cid(%{key: "value"})
     "zb2rhkN6szWhAmBFjjP8RSczv2YVNLnG1tz1Q7FyfEp8LssNZ"
   """
   def cid(value) do
