@@ -1,15 +1,5 @@
 %{
-  "base1": {:hex, :base1, "0.1.0", "493a46bb5b34bf38d3b69ea6eaff33416d222f1621231cb1a04af42a351117ea", [:mix], [], "hexpm"},
-  "base2": {:hex, :base2, "0.1.0", "bc9e19f1578e1439010d26b1bee456f3ac980481a46c3643b24e15c40e1db0ed", [:mix], [], "hexpm"},
-  "base58": {:hex, :base58, "0.1.0", "ab34d1a4ef0f11ac61b9f5ad54c35826c3bdc541688a2f95183417272aa1fcfc", [:mix], [], "hexpm"},
   "basefiftyeight": {:hex, :basefiftyeight, "0.1.0", "3d48544743bf9aab7ab02aed803ac42af77acf268c7d8c71d4f39e7fa85ee8d3", [:mix], [], "hexpm"},
-  "cid": {:git, "git@github.com:SimonLab/ex-cid.git", "9c9794b95e305f96aefa45a4ecd3ef68f77c878b", []},
-  "csv": {:hex, :csv, "2.1.1", "a4c1a7c30d2151b6e4976cb2f52c0a1d49ec965afb737ed84a684bc4284d1627", [:mix], [{:parallel_stream, "~> 1.0.4", [hex: :parallel_stream, repo: "hexpm", optional: false]}], "hexpm"},
   "ex_multihash": {:hex, :ex_multihash, "2.0.0", "7fb36f842a2ec1c6bbba550f28fcd16d3c62981781b9466c9c1975c43d7db43c", [:mix], [], "hexpm"},
   "jason": {:hex, :jason, "1.1.2", "b03dedea67a99223a2eaf9f1264ce37154564de899fd3d8b9a21b1a6fd64afe7", [:mix], [{:decimal, "~> 1.0", [hex: :decimal, repo: "hexpm", optional: true]}], "hexpm"},
-  "multibase": {:hex, :multibase, "0.0.1", "9243bebe6f7f0f9f873c770ddcddab285cc554a8dd2374b8de6b2add087eccbc", [:mix], [{:base1, "~> 0.1.0", [hex: :base1, repo: "hexpm", optional: false]}, {:base2, "~> 0.1.0", [hex: :base2, repo: "hexpm", optional: false]}, {:basefiftyeight, "~> 0.1.0", [hex: :basefiftyeight, repo: "hexpm", optional: false]}, {:zbase32, "~> 2.0.0", [hex: :zbase32, repo: "hexpm", optional: false]}], "hexpm"},
-  "multicodec": {:hex, :multicodec, "0.0.2", "7f2d0bca16bd37d5eefb389776bc2c955618c5903ac62c8e3293f38b0960d8e0", [:mix], [{:csv, "~> 2.1", [hex: :csv, repo: "hexpm", optional: false]}, {:varint, "~> 1.1", [hex: :varint, repo: "hexpm", optional: false]}], "hexpm"},
-  "parallel_stream": {:hex, :parallel_stream, "1.0.6", "b967be2b23f0f6787fab7ed681b4c45a215a81481fb62b01a5b750fa8f30f76c", [:mix], [], "hexpm"},
-  "varint": {:hex, :varint, "1.2.0", "61bffd9dcc2d5242d59f75694506b4d4013bb103f6a23e34b94f89cebb0c1ab3", [:mix], [], "hexpm"},
-  "zbase32": {:hex, :zbase32, "2.0.0", "5a61d5ee8f39092d4a243da2a42b5b4339ef226d9b182603f63d5a3f16d192ee", [:mix], [], "hexpm"},
 }
