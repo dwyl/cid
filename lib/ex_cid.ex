@@ -65,9 +65,19 @@ defmodule Cid do
   # takes a multihash and retuns a CID
   defp create_cid(multihash) when is_binary(multihash) do
     multihash
-    |> CID.cid!("raw", 1)
-    |> CID.encode!()
+    |> create_cid_suffix()
+    |> B58.encode58()
+    |> add_multibase_prefix()
   end
+
+  # takes a multihash and returns the suffix
+  # currently version is hardcoded to 1
+  # and multicodec-packed-content-type is hardcoded to "raw" ("U" == <<85>>)
+  # <version><multicodec-packed-content-type><multihash>
+  defp create_cid_suffix(multihash), do: <<1>> <> "U" <> multihash
+
+  # adds the multibase prefix to the suffix (<version><mc><mh>)
+  defp add_multibase_prefix(suffix), do: "z" <> suffix
 
   # adds new line to the end of string. (exists because all tests with ipfs
   # appeared to do the same thing.)
