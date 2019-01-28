@@ -1,9 +1,9 @@
-defmodule Rid.MixProject do
+defmodule ExCid.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :rid,
+      app: :ex_cid,
       version: "0.1.0",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
