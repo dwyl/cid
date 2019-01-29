@@ -63,6 +63,9 @@ defmodule Cid do
   defp create_cid({:error, msg}), do: msg
 
   # takes a multihash and retuns a CID
+  # B58.encode58 takes the binary returned from create_cid_suffix and converts
+  # it into a base58 string. For more info on base58 strings see
+  # https://en.wikipedia.org/wiki/Base58
   defp create_cid(multihash) when is_binary(multihash) do
     multihash
     |> create_cid_suffix()
@@ -76,7 +79,7 @@ defmodule Cid do
   # <version><multicodec-packed-content-type><multihash>
   defp create_cid_suffix(multihash), do: <<1>> <> "U" <> multihash
 
-  # adds the multibase prefix to the suffix (<version><mc><mh>)
+  # adds the multibase prefix (multibase-prefix) to the suffix (<version><mc><mh>)
   defp add_multibase_prefix(suffix), do: "z" <> suffix
 
   # adds new line to the end of string. (exists because all tests with ipfs
