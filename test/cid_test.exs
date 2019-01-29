@@ -53,10 +53,17 @@ defmodule CidTest do
     end
 
     test "returns a different CID when the value given differs (CIDs are all unique)" do
+      refute Cid.cid("") == Cid.cid(" ")
+      refute Cid.cid("\n") == Cid.cid("")
       refute Cid.cid("Hello World") == Cid.cid("salve mundi")
       refute Cid.cid("Hello World") == Cid.cid("hello world")
       refute Cid.cid(%{a: "a"}) == Cid.cid(%{a: "b"})
       refute Cid.cid(%__MODULE__{a: "a"}) == Cid.cid(%DummyStruct{})
+    end
+
+    test "empty values also work" do
+      assert Cid.cid("") == "zb2rhWm2M1wXXqtqU6pHfovz3DZQ7D54ZD2xN3ynwankHCBCn"
+      assert Cid.cid(%{}) == "zb2rhkFjaEEfsGTTeHVAGXB3qq7RzLHJojqpucfYFzoL2gB9P"
     end
   end
 end
