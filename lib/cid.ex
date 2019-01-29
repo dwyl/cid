@@ -66,7 +66,6 @@ defmodule Cid do
   # infomation on using # erlang functions in elixir see...
   # https://stackoverflow.com/questions/35283888/how-to-call-an-erlang-function-in-elixir
   defp create_multihash(str) when is_binary(str) do
-    str = add_new_line(str)
     digest = :crypto.hash(:sha256, str)
     {:ok, multihash} = Multihash.encode(:sha2_256, digest)
 
