@@ -10,7 +10,6 @@ before_install:
   - sudo ./install.sh
   - cd ..
 script:
-  - mix test
-  - ipfs
+  - mix all_tests
 after_success:
   - bash <(curl -s https://codecov.io/bash)

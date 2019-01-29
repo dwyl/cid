@@ -10,7 +10,7 @@ defmodule Cid.MixProject do
       deps: deps(),
       aliases: aliases(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test]
+      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test, all_tests: :test]
     ]
   end
 
@@ -27,11 +27,14 @@ defmodule Cid.MixProject do
       {:ex_multihash, "~> 2.0"},
       {:jason, "~> 1.1"},
       {:basefiftyeight, "~> 0.1.0"}, # Currenly building our own version of this here https://git.io/fhPaK. Can replace when it is ready
-      {:excoveralls, "~> 0.10", only: :test}
+      {:excoveralls, "~> 0.10", only: :test},
     ]
   end
 
   defp aliases do
-    [test: ["coveralls"]]
+    [
+      test: ["coveralls --exclude ipfs"],
+      all_tests: ["coveralls.detail --include ipfs"]
+    ]
   end
 end
