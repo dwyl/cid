@@ -21,6 +21,12 @@ defmodule Cid do
 
     iex> Cid.cid(%{key: "value"})
     "zb2rhkN6szWhAmBFjjP8RSczv2YVNLnG1tz1Q7FyfEp8LssNZ"
+
+    iex> Cid.cid(1234)
+    "invalid data type"
+
+    iex> Cid.cid([1,2,3,"four"])
+    "invalid data type"
   """
   def cid(value) do
     value
