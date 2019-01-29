@@ -4,10 +4,13 @@ end
 
 defmodule CidTest do
   use ExUnit.Case
+  use ExUnitProperties
+
   doctest Cid
 
   defstruct [:a]
-
+  @filename "random_str.txt"
+  @ipfs_args ["add", "random_str.txt", "-n", "--cid-version=1"]
   @dummy_map %{
     name: "Batman",
     username: "The Batman",
@@ -16,15 +19,15 @@ defmodule CidTest do
 
   describe "Testing ex_cid cid function" do
     test "returns the same CID as IPFS when given a string" do
-      assert "zb2rhkpbfTBtUV1ESqSScrUre8Hh77fhCKDLmX21rCo5xp8J9" == Cid.cid("Hello World")
+      assert "zb2rhhnbH6zTaAj948YVsYxW4c5AY6TfJURC9EGhQum3Kq7b3" == Cid.cid("Hello World")
     end
 
     test "returns the same CID as IPFS when given a map" do
-      assert "zb2rhbYzyUJP6euwn89vAstfgG2Au9BSwkFGUJkbujWztZWjZ" == Cid.cid(%{a: "a"})
+      assert "zb2rhdeaHh2UHghBcwxeFP1GRUYETDH96DkV6oppiz5Gk1xGN" == Cid.cid(%{a: "a"})
     end
 
     test "returns the same CID as IPFS when given a struct" do
-      assert "zb2rhbYzyUJP6euwn89vAstfgG2Au9BSwkFGUJkbujWztZWjZ" == Cid.cid(%__MODULE__{a: "a"})
+      assert "zb2rhdeaHh2UHghBcwxeFP1GRUYETDH96DkV6oppiz5Gk1xGN" == Cid.cid(%__MODULE__{a: "a"})
     end
 
     test "returns an error if given invalid data type" do
@@ -62,8 +65,24 @@ defmodule CidTest do
     end
 
     test "empty values also work" do
-      assert Cid.cid("") == "zb2rhWm2M1wXXqtqU6pHfovz3DZQ7D54ZD2xN3ynwankHCBCn"
-      assert Cid.cid(%{}) == "zb2rhkFjaEEfsGTTeHVAGXB3qq7RzLHJojqpucfYFzoL2gB9P"
+      assert Cid.cid("") == "zb2rhmy65F3REf8SZp7De11gxtECBGgUKaLdiDj7MCGCHxbDW"
+      assert Cid.cid(%{}) == "zb2rhbE2775XANjTsRTV9sxfFMWxrGuMWYgshDn9xvjG69fZ3"
+    end
+
+    @tag :ipfs
+    property "test with 100 random strings" do
+      check all str <- StreamData.string(:ascii) do
+
+        File.write(@filename, str)
+
+        {added_str, 0} = System.cmd("ipfs", @ipfs_args)
+
+        <<"added ", cid::bytes-size(49), _::binary>> = added_str
+
+        assert cid == Cid.cid(str)
+        
+        File.rm!(@filename)
+      end
     end
   end
 end

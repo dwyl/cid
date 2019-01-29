@@ -22,10 +22,10 @@ defmodule Cid do
   ## Examples
 
     iex> Cid.cid("hello")
-    "zb2rhcc1wJn2GHDLT2YkmPq5b69cXc2xfRZZmyufbjFUfBkxr"
+    "zb2rhZfjRh2FHHB2RkHVEvL2vJnCTcu7kwRqgVsf9gpkLgteo"
 
     iex> Cid.cid(%{key: "value"})
-    "zb2rhkN6szWhAmBFjjP8RSczv2YVNLnG1tz1Q7FyfEp8LssNZ"
+    "zb2rhn1C6ZDoX6rdgiqkqsaeK7RPKTBgEi8scchkf3xdsi8Bj"
 
     iex> Cid.cid(1234)
     "invalid data type"
@@ -61,11 +61,9 @@ defmodule Cid do
     |> create_multihash()
   end
 
-  # if create_multihash is called with a string, the string has a new line added
-  # to the end (as that's what IPFS appears to be doing based on tests), then
-  # the string is converted into a multihash
-  # This uses the erlang crypto hash function. For more infomation on using
-  # erlang functions in elixir see...
+  # if create_multihash is called with a string then the string is converted
+  # into a multihash. This uses the erlang crypto hash function. For more
+  # infomation on using # erlang functions in elixir see...
   # https://stackoverflow.com/questions/35283888/how-to-call-an-erlang-function-in-elixir
   defp create_multihash(str) when is_binary(str) do
     str = add_new_line(str)
@@ -107,10 +105,4 @@ defmodule Cid do
   # adds the multibase prefix (multibase-prefix) to the suffix (<version><mc><mh>)
   # for more info on multibase, see https://github.com/multiformats/multibase
   defp add_multibase_prefix(suffix), do: "z" <> suffix
-
-  # adds new line to the end of string. (exists because all tests with ipfs
-  # appeared to do the same thing.)
-  defp add_new_line(str) do
-    str <> "\n"
-  end
 end
