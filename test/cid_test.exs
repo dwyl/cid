@@ -9,8 +9,8 @@ defmodule CidTest do
   doctest Cid
 
   defstruct [:a]
-  @filename "random_str.txt"
-  @ipfs_args ["add", "random_str.txt", "-n", "--cid-version=1"]
+  @filename "random.txt"
+  @ipfs_args ["add", @filename, "-n", "--cid-version=1"]
   @dummy_map %{
     name: "Batman",
     username: "The Batman",
@@ -45,12 +45,11 @@ defmodule CidTest do
     end
 
     test "A struct with the same keys and values as a map creates the same CID" do
-      struct =
-        %DummyStruct{
-          age: 80,
-          name: "Batman",
-          username: "The Batman"
-        }
+      struct = %DummyStruct{
+        age: 80,
+        name: "Batman",
+        username: "The Batman"
+      }
 
       assert Cid.cid(struct) == Cid.cid(@dummy_map)
     end
@@ -71,18 +70,41 @@ defmodule CidTest do
 
     @tag :ipfs
     property "test with 100 random strings" do
-      check all str <- StreamData.string(:ascii) do
-
-        File.write(@filename, str)
-
-        {added_str, 0} = System.cmd("ipfs", @ipfs_args)
-
-        <<"added ", cid::bytes-size(49), _::binary>> = added_str
-
-        assert cid == Cid.cid(str)
-        
-        File.rm!(@filename)
+      check all str <- StreamData.string(:ascii), max_runs: 50 do
+        compare_ipfs_cid(str)
       end
     end
+
+    @tag :ipfs
+    property "test with 100 random maps" do
+      check all map <- random_map(), max_runs: 50 do
+        map
+        |> Jason.encode!()
+        |> compare_ipfs_cid()
+      end
+    end
+  end
+
+  def compare_ipfs_cid(val) do
+    File.write(@filename, val)
+
+    {added_val, 0} = System.cmd("ipfs", @ipfs_args)
+
+    <<"added ", cid::bytes-size(49), _::binary>> = added_val
+
+    assert cid == Cid.cid(val)
+
+    File.rm!(@filename)
+  end
+
+  def random_map do
+    keys = StreamData.atom(:alphanumeric)
+    values = StreamData.one_of([random_value(), StreamData.list_of(random_value())])
+
+    StreamData.map_of(keys, values)
+  end
+
+  def random_value do
+    StreamData.one_of([StreamData.string(:ascii), StreamData.integer()])
   end
 end
