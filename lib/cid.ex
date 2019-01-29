@@ -40,10 +40,11 @@ defmodule Cid do
     |> create_cid()
   end
 
-  # if create_multihash is called with a struct, the struct is converted into a
-  # map and then create_multihash is called again
+  # create_multihash returns a multihash. A multihash is a self describing hash.
   # for more info on multihashes see this blog post...
   # https://pascalprecht.github.io/posts/future-proofed-hashes-with-multihash/
+  # if create_multihash is called with a struct, the struct is converted into a
+  # map and then create_multihash is called again
   # The %_{} syntax works like regular pattern matching. The underscore, _,
   # simply matches any Struct/Module name.
   defp create_multihash(%_{} = struct) do
