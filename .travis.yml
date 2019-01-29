@@ -9,6 +9,7 @@ before_install:
   - cd go-ipfs
   - sudo ./install.sh
   - cd ..
+  - ipfs init
 script:
   - mix all_tests
 after_success:
