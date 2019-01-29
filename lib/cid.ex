@@ -33,6 +33,7 @@ defmodule Cid do
     iex> Cid.cid([1,2,3,"four"])
     "invalid data type"
   """
+  @spec cid(String.t | map() | struct()) :: String.t
   def cid(value) do
     value
     |> create_multihash()
