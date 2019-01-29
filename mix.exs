@@ -7,7 +7,10 @@ defmodule Cid.MixProject do
       version: "0.1.0",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      aliases: aliases(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test]
     ]
   end
 
@@ -23,7 +26,12 @@ defmodule Cid.MixProject do
     [
       {:ex_multihash, "~> 2.0"},
       {:jason, "~> 1.1"},
-      {:basefiftyeight, "~> 0.1.0"} # Currenly building our own version of this here https://git.io/fhPaK. Can replace when it is ready
+      {:basefiftyeight, "~> 0.1.0"}, # Currenly building our own version of this here https://git.io/fhPaK. Can replace when it is ready
+      {:excoveralls, "~> 0.10", only: :test}
     ]
+  end
+
+  defp aliases do
+    [test: ["coveralls"]]
   end
 end

@@ -5,3 +5,5 @@ env:
   - MIX_ENV=test
 script:
   - mix test
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
