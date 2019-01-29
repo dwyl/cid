@@ -1,7 +1,7 @@
 defmodule Cid do
   @moduledoc """
   Provides a way for a user to turn a String, Map or Struct into a CID that
-  is identical to one what will be returned from IPFS if the same data is
+  is identical to one that will be returned from IPFS if the same data is
   added.
 
   Currently only produces a default v1 CID.
