@@ -8,6 +8,11 @@ defmodule Cid do
   Currently only uses the "raw" codec
   Data provided must be under 256Kb in order for the CID to match the one
   returned by IPFS
+
+  For more info on CIDs and IPFS see the following...
+  https://ipfs.io/
+  https://pascalprecht.github.io/posts/content-identifiers-in-ipfs/
+  https://github.com/dwyl/learn-ipfs/issues
   """
 
   @doc """
@@ -36,6 +41,10 @@ defmodule Cid do
 
   # if create_multihash is called with a struct, the struct is converted into a
   # map and then create_multihash is called again
+  # for more info on multihashes see this blog post...
+  # https://pascalprecht.github.io/posts/future-proofed-hashes-with-multihash/
+  # The %_{} syntax works like regular pattern matching. The underscore, _,
+  # simply matches any Struct/Module name.
   defp create_multihash(%_{} = struct) do
     struct
     |> Map.from_struct()
@@ -53,6 +62,9 @@ defmodule Cid do
   # if create_multihash is called with a string, the string has a new line added
   # to the end (as that's what IPFS appears to be doing based on tests), then
   # the string is converted into a multihash
+  # This uses the erlang crypto hash function. For more infomation on using
+  # erlang functions in elixir see...
+  # https://stackoverflow.com/questions/35283888/how-to-call-an-erlang-function-in-elixir
   defp create_multihash(str) when is_binary(str) do
     str = add_new_line(str)
     digest = :crypto.hash(:sha256, str)
@@ -81,11 +93,17 @@ defmodule Cid do
 
   # takes a multihash and returns the suffix
   # currently version is hardcoded to 1
+  # (currenly IPFS only have 2 versions, 0 or 1. O is deprecated)
   # and multicodec-packed-content-type is hardcoded to "raw" ("U" == <<85>>)
+  # more info on multicodec can be found https://github.com/multiformats/multicodec
   # <version><multicodec-packed-content-type><multihash>
+  # the syntax on this line is concatenating strings and binary values together.
+  # Strings in elixir are binaries and that is how this works. Learn more here...
+  # https://elixir-lang.org/getting-started/binaries-strings-and-char-lists.html
   defp create_cid_suffix(multihash), do: <<1>> <> "U" <> multihash
 
   # adds the multibase prefix (multibase-prefix) to the suffix (<version><mc><mh>)
+  # for more info on multibase, see https://github.com/multiformats/multibase
   defp add_multibase_prefix(suffix), do: "z" <> suffix
 
   # adds new line to the end of string. (exists because all tests with ipfs
