@@ -68,15 +68,21 @@ defmodule CidTest do
       assert Cid.cid(%{}) == "zb2rhbE2775XANjTsRTV9sxfFMWxrGuMWYgshDn9xvjG69fZ3"
     end
 
+    # Property based tests that generate random strings and
+    # use them in our compare_ipfs_cid function
+    # Tagged to allow you to ignore these tests if you don't have ipfs installed
     @tag :ipfs
-    property "test with 100 random strings" do
+    property "test with 50 random strings" do
       check all str <- StreamData.string(:ascii), max_runs: 50 do
         compare_ipfs_cid(str)
       end
     end
 
+    # Property based tests that generate random maps and
+    # use them in our compare_ipfs_cid function
+    # Tagged to allow you to ignore these tests if you don't have ipfs installed
     @tag :ipfs
-    property "test with 100 random maps" do
+    property "test with 50 random maps" do
       check all map <- random_map(), max_runs: 50 do
         map
         |> Jason.encode!()
@@ -85,6 +91,9 @@ defmodule CidTest do
     end
   end
 
+  # Calls IPFS `add` function to generate cid
+  # then compares result to result of our `Cid.cid` function
+  # see: https://docs.ipfs.io/introduction/usage/
   def compare_ipfs_cid(val) do
     File.write(@filename, val)
 
