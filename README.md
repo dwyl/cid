@@ -237,9 +237,9 @@ We can then create a URLs table
 in our URL shortening app/service
 with the following entry:
 
-| `inserted_at ` | **`URL`** (PK) | `cid` | `short` |
-| ----------- | ----------- | ----------- | ----------- |
-| 1541609554 | https://github.com/dwyl/phoenix-ecto-append-only-log-example | gVSTedHFGBetxyYib9mBQsjtZj4dJjQe | gV |
+| `inserted_at ` | **`URL`** (PK)                                               | `cid`                            | `short` |
+| -------------- | ------------------------------------------------------------ | -------------------------------- | ------- |
+| 1541609554     | https://github.com/dwyl/phoenix-ecto-append-only-log-example | gVSTedHFGBetxyYib9mBQsjtZj4dJjQe | gV      |
 
 So the "short" url would be
 [dwyl.co/gV](https://github.com/dwyl/phoenix-ecto-append-only-log-example)
@@ -273,6 +273,14 @@ be found at [https://hexdocs.pm/rid](https://hexdocs.pm/rid)
 
 -->
 
+## Tests
+
+The tests for this module are a combination of doctests, unit tests and property based tests.
+
+To run the property based tests you will need an installation of [IPFS](https://ipfs.io/).
+See https://github.com/dwyl/learn-ipfs#how for details.
+
+Then you can run `mix all_tests`, which will run the `Cid.cid` function on 100 randomly generated strings and maps, comparing the results of these to the IPFS generated cid, ensuring our function is correct in its implementation.
 
 # Research, Background & Relevant Reading
 + Real World examples of services that use Strings as IDs instead of Integers. [Real World Examples](https://github.com/dwyl/cid/blob/master/read_world_examples.md)
@@ -355,10 +363,10 @@ be **familiar** to people_)
 
 **`prev: previous_cid`** address _example_:
 
-| `inserted ` | **`cid`**(PK)<sup>1</sup> | **`name`** | **`address`** | **`prev`** |
-| ----------- | ----------- | ----------- | ----------- |-----|
-| 1541609554 | **gVSTedHFGBetxy** | Bruce Wane | 1007 Mountain Drive, Gotham | null |
-| 1541618643 | smnELuCmEaX42 | Bruce Wane | [Rua Goncalo Afonso, Vila Madalena, Sao Paulo, 05436-100, Brazil](https://www.tripadvisor.co.uk/ShowUserReviews-g303631-d2349935-r341872180-Batman_Alley-Sao_Paulo_State_of_Sao_Paulo.html "Batman Alley ;-)") | **gVSTedHFGBetxy** |
+| `inserted ` | **`cid`**(PK)<sup>1</sup> | **`name`** | **`address`**                                                                                                                                                                                                  | **`prev`**         |
+| ----------- | ------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| 1541609554  | **gVSTedHFGBetxy**        | Bruce Wane | 1007 Mountain Drive, Gotham                                                                                                                                                                                    | null               |
+| 1541618643  | smnELuCmEaX42             | Bruce Wane | [Rua Goncalo Afonso, Vila Madalena, Sao Paulo, 05436-100, Brazil](https://www.tripadvisor.co.uk/ShowUserReviews-g303631-d2349935-r341872180-Batman_Alley-Sao_Paulo_State_of_Sao_Paulo.html "Batman Alley ;-)") | **gVSTedHFGBetxy** |
 
 When a row does _not_ have a **`prev`** value then we know it is the _first_
 time that content has been inserted into the database. When a **`prev`** value
