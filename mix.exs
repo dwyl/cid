@@ -10,7 +10,14 @@ defmodule Cid.MixProject do
       deps: deps(),
       aliases: aliases(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test, all_tests: :test]
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test,
+        "coveralls.json": :test,
+        all_tests: :test
+      ]
     ]
   end
 
@@ -35,7 +42,7 @@ defmodule Cid.MixProject do
   defp aliases do
     [
       test: ["coveralls --exclude ipfs"],
-      all_tests: ["coveralls.detail --include ipfs"]
+      all_tests: ["coveralls.detail --include ipfs", "coveralls.json"]
     ]
   end
 end
