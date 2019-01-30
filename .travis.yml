@@ -1,16 +1,11 @@
 language: elixir
 elixir:
-  - 1.8
-env:
-  - MIX_ENV=test
-before_install:
-  - curl https://dist.ipfs.io/go-ipfs/v0.4.18/go-ipfs_v0.4.18_linux-386.tar.gz --output go-ipfs.tar.gz
-  - tar xvfz go-ipfs.tar.gz
-  - cd go-ipfs
-  - sudo ./install.sh
-  - cd ..
-  - ipfs init
+  - 1.3.4
+otp_release:
+  - 19.1
+
 script:
-  - mix all_tests
+  - MIX_ENV=test mix do compile --warnings-as-errors, coveralls.json
+
 after_success:
   - bash <(curl -s https://codecov.io/bash)
