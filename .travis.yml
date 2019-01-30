@@ -11,6 +11,6 @@ before_install:
   - cd ..
   - ipfs init
 script:
-  - mix coveralls.html
+  - mix coveralls.json
 after_success:
   - bash <(curl -s https://codecov.io/bash)
