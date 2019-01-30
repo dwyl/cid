@@ -11,6 +11,6 @@ before_install:
   - cd ..
   - ipfs init
 script:
-  - MIX_ENV=test mix do compile --warnings-as-errors, coveralls.json
+  - mix coveralls.html
 after_success:
   - bash <(curl -s https://codecov.io/bash)
