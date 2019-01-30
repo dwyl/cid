@@ -280,10 +280,16 @@ be found at [https://hexdocs.pm/rid](https://hexdocs.pm/rid)
 
 The tests for this module are a combination of doctests, unit tests and property based tests.
 
-To run the property based tests you will need an installation of [IPFS](https://ipfs.io/).
+To run the property based tests you will need to install [IPFS](https://ipfs.io/).
 See https://github.com/dwyl/learn-ipfs#how for details.
 
-Then you can run `mix all_tests`, which will run the `Cid.cid` function on 100 randomly generated strings and maps, comparing the results of these to the IPFS generated cid, ensuring our function is correct in its implementation.
+The property based tests will run by default. These tests are more comprehensive
+when compared to the "regular" tests. They will run the `Cid.cid` function on
+100 randomly generated strings and maps, comparing the results of these to the
+IPFS generated cid, ensuring our function is correct in its implementation.
+
+These tests take a little longer to run that the "regular" tests, so if you wish
+you can skip them with `mix test --exclude ipfs`
 
 # Research, Background & Relevant Reading
 + Real World examples of services that use Strings as IDs instead of Integers. [Real World Examples](https://github.com/dwyl/cid/blob/master/read_world_examples.md)
