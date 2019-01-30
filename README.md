@@ -1,4 +1,7 @@
 # `cid`
+[![Build Status](https://travis-ci.org/dwyl/cid.svg?branch=master)](https://travis-ci.org/dwyl/cid)
+[![codecov](https://codecov.io/gh/dwyl/cid/branch/master/graph/badge.svg)](https://codecov.io/gh/dwyl/cid)
+
 
 **`cid`** ("content id") is a _human-friendly_
 unique ID function built for use with mobile-first/distributed apps.
