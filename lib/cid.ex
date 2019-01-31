@@ -86,7 +86,7 @@ defmodule Cid do
   defp create_cid(multihash) when is_binary(multihash) do
     multihash
     |> create_cid_suffix()
-    |> B58.encode58()
+    |> Base58Encode.encode()
     |> add_multibase_prefix()
   end
 
