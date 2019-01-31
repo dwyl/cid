@@ -1,4 +1,5 @@
 # `cid`
+[![Hex pm](http://img.shields.io/hexpm/v/ex_cid.svg?style=flat)](https://hex.pm/packages/ex_cid)
 [![Build Status](https://travis-ci.org/dwyl/cid.svg?branch=master)](https://travis-ci.org/dwyl/cid)
 [![codecov](https://codecov.io/gh/dwyl/cid/branch/master/graph/badge.svg)](https://codecov.io/gh/dwyl/cid)
 
