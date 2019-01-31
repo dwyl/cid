@@ -28,7 +28,7 @@ defmodule Cid.MixProject do
     [
       {:ex_multihash, "~> 2.0"},
       {:jason, "~> 1.1"},
-      {:basefiftyeight, "~> 0.1.0"}, # Currenly building our own version of this here https://git.io/fhPaK. Can replace when it is ready
+      {:b58, "~> 0.1.1"},
       {:excoveralls, "~> 0.10", only: :test},
       {:stream_data, "~> 0.4.2", only: :test}
     ]
