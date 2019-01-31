@@ -3,7 +3,7 @@ defmodule Cid.MixProject do
 
   def project do
     [
-      app: :ex_cid,
+      app: :excid,
       version: "0.1.0",
       package: package(),
       description: description(),
@@ -43,7 +43,7 @@ defmodule Cid.MixProject do
 
   defp package() do
     [
-      name: "ex_cid",
+      name: "excid",
       licenses: ["GNU GPL v2.0"],
       maintainers: ["dwyl"],
       links: %{"GitHub" => "https://github.com/dwyl/cid"}
