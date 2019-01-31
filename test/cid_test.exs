@@ -17,7 +17,7 @@ defmodule CidTest do
     age: 80
   }
 
-  describe "Testing ex_cid cid function" do
+  describe "Testing Cid cid function" do
     test "returns the same CID as IPFS when given a string" do
       assert "zb2rhhnbH6zTaAj948YVsYxW4c5AY6TfJURC9EGhQum3Kq7b3" == Cid.cid("Hello World")
     end
