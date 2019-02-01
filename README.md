@@ -12,6 +12,38 @@ unique ID function built for use with mobile-first/distributed apps.
 which do not require offline/client support.  
 -->
 
+# How to use the module
+
+1. Add `excid` to your list of dependencies
+
+```elixir
+def deps do
+  [
+    {:excid, "~> 0.1.0"}
+  ]
+end
+```
+
+and run `mix deps.get`
+
+2. Call the `cid/1` function with a string, map, or struct as a parameter...
+
+```
+Cid.cid("hello")
+"zb2rhZfjRh2FHHB2RkHVEvL2vJnCTcu7kwRqgVsf9gpkLgteo"
+
+Cid.cid(%{key: "value"})
+"zb2rhn1C6ZDoX6rdgiqkqsaeK7RPKTBgEi8scchkf3xdsi8Bj"
+```
+
+If the parameter is not one of the ones listed above then the function will
+return `"invalid data type"`.
+
+```
+Cid.cid([])
+"invalid data type"
+```
+
 # Why?
 
 We needed a way of running our App(s) across multiple servers/devices
@@ -192,37 +224,9 @@ and increase gradually as required
 (_similar to how Instagram grew their IDs as they scaled, see below_).
 
 
-# How?
-
-
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `cid` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:cid, "~> 0.1.0"}
-  ]
-end
-```
-
-## Usage
-
-Right now there are only two use cases for `cid` generation
-which are inline with what we need for our _current_ App/project:
+# Real world usage
 
 ### `cid` from a `String`
-
-Given that under-the-hood `cid` is "_just_" using SHA512 hash,
-the _output_ will _always_ be the same. It's simple, that's the point.
-
-```
-require Cid
-
-Cid.make("hello world") # > "MJ7MSJwS1utMxA9QyQLytNDtd5RGnx6m" (always!)
-```
 
 A real world use case for
 wanting a `cid` based on a `String`
@@ -234,31 +238,31 @@ the `cid` of this url is:
 ```
 require Cid
 
-Cid.make("https://github.com/dwyl/phoenix-ecto-append-only-log-example") # > "gVSTedHFGBetxyYib9mBQsjtZj4dJjQe"
+Cid.cid("https://github.com/dwyl/phoenix-ecto-append-only-log-example") # > "zb2rhjLfmD2trAmpEi3ZJSpFtuNokCrpfFido7QHCQRVnGoZW"
 ```
 
 We can then create a URLs table
 in our URL shortening app/service
 with the following entry:
 
-| `inserted_at ` | **`URL`** (PK)                                               | `cid`                            | `short` |
-| -------------- | ------------------------------------------------------------ | -------------------------------- | ------- |
-| 1541609554     | https://github.com/dwyl/phoenix-ecto-append-only-log-example | gVSTedHFGBetxyYib9mBQsjtZj4dJjQe | gV      |
+| `inserted_at ` | **`URL`** (PK)                                               | `cid`                                   | `short` |
+| -------------- | ------------------------------------------------------------ | ------------------------------------------------- | ----- |
+| 1541609554     | https://github.com/dwyl/phoenix-ecto-append-only-log-example | zb2rhjLfmD2trAmpEi3ZJSpFtuNokCrpfFido7QHCQRVnGoZW | zb2   |
 
 So the "short" url would be
-[dwyl.co/gV](https://github.com/dwyl/phoenix-ecto-append-only-log-example)
+[dwyl.co/zb2](https://github.com/dwyl/phoenix-ecto-append-only-log-example)
 
 This is a relatively "boring" but still perfect _valid_ use case.
 If someone attempts to create a short URL for this (_same_) _long_ URL,
 the URL shortening app will simply return
-[dwyl.co/gV](https://github.com/dwyl/phoenix-ecto-append-only-log-example)
+[dwyl.co/zb2](https://github.com/dwyl/phoenix-ecto-append-only-log-example)
 the _same_ short URL each time.
 
-The _reason_ we can abbreviate the URL to just `gV`
+The _reason_ we can abbreviate the URL to just `zb2`
 is because our SHORT URL service has a _centralised_ Database/store.
 If we wanted to run a _decentralised_ content addressing system,
 we would simply link to the _full_ `cid`:
-[dwyl.co/gVSTedHFGBetxyYib9mBQsjtZj4dJjQe](https://github.com/dwyl/phoenix-ecto-append-only-log-example)
+[dwyl.co/zb2rhjLfmD2trAmpEi3ZJSpFtuNokCrpfFido7QHCQRVnGoZW](https://github.com/dwyl/phoenix-ecto-append-only-log-example)
 
 Where the chance of `cid` collision
 is less than 1 in "the number of
@@ -267,15 +271,10 @@ If we generated 1 Billion CIDs per _second_
 for the next Trillion years there would
 still be less than a **0.001%** chance of collision.<sup>3</sup>
 
-### `cid` from a `Map`
+<!-- ### `cid` from a `Map` -->
+<!-- add example for map. Can link to https://github.com/dwyl/phoenix-ecto-append-only-log-example/issues/22
+when then example is finished. -->
 
-<!--
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/rid](https://hexdocs.pm/rid)
-
--->
 
 ## Tests
 
