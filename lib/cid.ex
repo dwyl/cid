@@ -21,9 +21,19 @@ defmodule Cid do
 
   ## Examples
 
+    iex> Application.put_env(:excid, :base, :base32)
+    iex> Cid.cid("hello")
+    "bafkreibm6jg3ux5qumhcn2b3flc3tyu6dmlb4xa7u5bf44yegnrjhc4yeq"
+
+    iex> Application.put_env(:excid, :base, :base58)
     iex> Cid.cid("hello")
     "zb2rhZfjRh2FHHB2RkHVEvL2vJnCTcu7kwRqgVsf9gpkLgteo"
 
+    iex> Application.put_env(:excid, :base, :base32)
+    iex> Cid.cid(%{key: "value"})
+    "bafkreihehk6pgn2sisbzyajpsyz7swdc2izkswya2w6hgsftbgfz73l7gi"
+
+    iex> Application.put_env(:excid, :base, :base58)
     iex> Cid.cid(%{key: "value"})
     "zb2rhn1C6ZDoX6rdgiqkqsaeK7RPKTBgEi8scchkf3xdsi8Bj"
 
@@ -32,6 +42,10 @@ defmodule Cid do
 
     iex> Cid.cid([1,2,3,"four"])
     "invalid data type"
+
+    iex> Application.put_env(:excid, :base, :wrong_base)
+    iex> Cid.cid("hello")
+    "invalid base"
   """
   @spec cid(String.t | map() | struct()) :: String.t
   def cid(value) do
@@ -80,14 +94,19 @@ defmodule Cid do
   defp create_cid({:error, msg}), do: msg
 
   # takes a multihash and retuns a CID
-  # B58.encode58 takes the binary returned from create_cid_suffix and converts
-  # it into a base58 string. For more info on base58 strings see
-  # https://en.wikipedia.org/wiki/Base58
+  # Base58Encode.encode58 or Base.encode32 takes the binary returned from create_cid_suffix and converts
+  # it into the specified base string.
+  # For more info on base58 strings see https://en.wikipedia.org/wiki/Base58
   defp create_cid(multihash) when is_binary(multihash) do
-    multihash
+    base = Application.get_env(:excid, :base) || :base32
+    hash = multihash
     |> create_cid_suffix()
-    |> Base58Encode.encode()
-    |> add_multibase_prefix()
+    |> encode_with_base(base)
+
+    case hash do
+      {:ok, h} -> add_multibase_prefix(h, base)
+      {:error, e} -> e
+    end
   end
 
   # takes a multihash and returns the suffix
@@ -101,7 +120,21 @@ defmodule Cid do
   # https://elixir-lang.org/getting-started/binaries-strings-and-char-lists.html
   defp create_cid_suffix(multihash), do: <<1>> <> "U" <> multihash
 
+  # Takes a binary, a base and return the encoded binary in the base.
+  defp encode_with_base(binary, base) do
+    case base do
+      :base58 -> {:ok, Base58Encode.encode(binary)}
+
+      :base32 -> {:ok, Base.encode32(binary, case: :lower, padding: false)}
+
+      _ -> {:error, "invalid base"}
+
+    end
+  end
+
   # adds the multibase prefix (multibase-prefix) to the suffix (<version><mc><mh>)
   # for more info on multibase, see https://github.com/multiformats/multibase
-  defp add_multibase_prefix(suffix), do: "z" <> suffix
+  defp add_multibase_prefix(suffix, :base58), do: "z" <> suffix
+  defp add_multibase_prefix(suffix, :base32), do: "b" <> suffix
+
 end
