@@ -26,7 +26,14 @@ end
 
 and run `mix deps.get`
 
-2. Call the `cid/1` function with a string, map, or struct as a parameter...
+2. Define in your mix configuration which base you want to use to create the cid.
+The value of the base should be the either `:base32` or `:base58`.
+If the base is not defined then `excid` will use the `base32` by default.
+
+```elixir
+config :excid, base: :base32
+```
+3. Call the `cid/1` function with a string, map, or struct as a parameter...
 
 ```
 Cid.cid("hello")

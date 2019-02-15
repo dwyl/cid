@@ -3,7 +3,7 @@ defmodule DummyStruct do
 end
 
 defmodule CidTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: false
   use ExUnitProperties
 
   doctest Cid
@@ -11,6 +11,8 @@ defmodule CidTest do
   defstruct [:a]
   @filename "random.txt"
   @ipfs_args ["add", @filename, "-n", "--cid-version=1"]
+  @ipfs_cidv0 ["add", @filename, "-n", "--raw-leaves"]
+  @ipfs_convert_cid ["cid", "base32"]
   @dummy_map %{
     name: "Batman",
     username: "The Batman",
@@ -18,6 +20,10 @@ defmodule CidTest do
   }
 
   describe "Testing Cid cid function" do
+    setup do
+      Application.put_env(:excid, :base, :base58)
+    end
+
     test "returns the same CID as IPFS when given a string" do
       assert "zb2rhhnbH6zTaAj948YVsYxW4c5AY6TfJURC9EGhQum3Kq7b3" == Cid.cid("Hello World")
     end
@@ -91,6 +97,17 @@ defmodule CidTest do
     end
   end
 
+  @tag :ipfs
+  describe "Test cidv1 base32" do
+    setup do
+      Application.put_env(:excid, :base, :base32)
+    end
+    property "test cidv1 base32 with 50 random string" do
+      check all str <- StreamData.string(:ascii), max_runs: 50 do
+        compare_ipfs_cid_base32(str)
+      end
+    end
+  end
   # Calls IPFS `add` function to generate cid
   # then compares result to result of our `Cid.cid` function
   # see: https://docs.ipfs.io/introduction/usage/
@@ -104,6 +121,15 @@ defmodule CidTest do
     assert cid == Cid.cid(val)
 
     File.rm!(@filename)
+  end
+
+  def compare_ipfs_cid_base32(val) do
+    File.write(@filename, val)
+    {added_val, 0} = System.cmd("ipfs", @ipfs_cidv0 )
+    <<"added ", cid::bytes-size(49), _::binary>> = added_val
+    {cidv1, 0} = System.cmd("ipfs", (@ipfs_convert_cid ++ [cid]))
+
+    assert String.replace(cidv1, "\n", "") == Cid.cid(val)
   end
 
   def random_map do
