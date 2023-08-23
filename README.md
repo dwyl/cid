@@ -10,7 +10,7 @@ used by mobile-first/distributed apps.
 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/cid/ci.yml?label=build&style=flat-square&branch=main)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/cid/main.svg?style=flat-square)](http://codecov.io/github/dwyl/cid?branch=main)
-[![Hex.pm](https://img.shields.io/hexpm/v/cid?color=brightgreen&style=flat-square)](https://hex.pm/packages/cid)
+[![Hex.pm](https://img.shields.io/hexpm/v/excid?color=brightgreen&style=flat-square)](https://hex.pm/packages/cid)
 [![Libraries.io dependency status](https://img.shields.io/librariesio/release/hex/cid?logoColor=brightgreen&style=flat-square)](https://libraries.io/hex/cid)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/cid/issues)
 [![HitCount](http://hits.dwyl.com/dwyl/cid.svg)](http://hits.dwyl.com/dwyl/cid)

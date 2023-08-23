@@ -46,7 +46,7 @@ defmodule Cid.MixProject do
   defp package() do
     [
       name: "excid",
-      licenses: ["GNU GPL v2.0"],
+      licenses: ["GPL-2.0-or-later"],
       maintainers: ["dwyl"],
       links: %{"GitHub" => "https://github.com/dwyl/cid"}
     ]
