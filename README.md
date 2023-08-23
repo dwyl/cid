@@ -1,11 +1,28 @@
+<div align="center">
+
+# `cid`
+
+**`cid`** ("content id") is a _human-friendly_
+_unique_ ID function 
+used by mobile-first/distributed apps.
+
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/cid/ci.yml?label=build&style=flat-square&branch=main)
+[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/cid/main.svg?style=flat-square)](http://codecov.io/github/dwyl/cid?branch=main)
+[![Hex.pm](https://img.shields.io/hexpm/v/cid?color=brightgreen&style=flat-square)](https://hex.pm/packages/cid)
+[![Libraries.io dependency status](https://img.shields.io/librariesio/release/hex/cid?logoColor=brightgreen&style=flat-square)](https://libraries.io/hex/cid)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/cid/issues)
+[![HitCount](http://hits.dwyl.com/dwyl/cid.svg)](http://hits.dwyl.com/dwyl/cid)
+
+![swiss-army-knife](https://user-images.githubusercontent.com/194400/94815682-b646e300-03f2-11eb-8069-46b9e10fac7e.png)
+
+</div>
+
+
 # `cid`
 [![Hex pm](http://img.shields.io/hexpm/v/excid.svg?style=flat)](https://hex.pm/packages/excid)
 [![Build Status](https://travis-ci.org/dwyl/cid.svg?branch=master)](https://travis-ci.org/dwyl/cid)
 [![codecov](https://codecov.io/gh/dwyl/cid/branch/master/graph/badge.svg)](https://codecov.io/gh/dwyl/cid)
 
-
-**`cid`** ("content id") is a _human-friendly_
-unique ID function built for use with mobile-first/distributed apps.
 
 <!-- add link to example of single-server setup using cid!
 > **Note**: `cid` can also/easily be used for centralised apps
