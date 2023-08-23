@@ -4,14 +4,16 @@ defmodule Cid.MixProject do
   def project do
     [
       app: :excid,
-      version: "0.2.0",
+      version: "1.0.0",
       package: package(),
       description: description(),
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
+      aliases: aliases(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
+        c: :test,
         coveralls: :test,
         "coveralls.json": :test,
       ]
@@ -33,20 +35,27 @@ defmodule Cid.MixProject do
       {:b58, "~> 0.1.1"},
       {:excoveralls, "~> 0.10", only: :test},
       {:stream_data, "~> 0.4.2", only: :test},
-      {:ex_doc, "~> 0.19.3", only: :dev}
+      {:ex_doc, "~> 0.30.3", only: :dev}
     ]
   end
 
   defp description() do
-    "cid (\"content id\") is a human-friendly (readable/typeable) unique ID function built for distributed/decentralised systems."
+    "cid (\"content id\") is a human-friendly (readable/typeable) unique ID function built for distributed/decentralized systems."
   end
 
   defp package() do
     [
       name: "excid",
-      licenses: ["GNU GPL v2.0"],
+      licenses: ["GPL-2.0-or-later"],
       maintainers: ["dwyl"],
       links: %{"GitHub" => "https://github.com/dwyl/cid"}
+    ]
+  end
+
+  defp aliases do
+    [
+      t: ["test"],
+      c: ["coveralls.html"]
     ]
   end
 end

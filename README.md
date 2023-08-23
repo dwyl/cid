@@ -1,20 +1,36 @@
-# `cid`
-[![Hex pm](http://img.shields.io/hexpm/v/excid.svg?style=flat)](https://hex.pm/packages/excid)
-[![Build Status](https://travis-ci.org/dwyl/cid.svg?branch=master)](https://travis-ci.org/dwyl/cid)
-[![codecov](https://codecov.io/gh/dwyl/cid/branch/master/graph/badge.svg)](https://codecov.io/gh/dwyl/cid)
+<div align="center">
 
+# `cid`
 
 **`cid`** ("content id") is a _human-friendly_
-unique ID function built for use with mobile-first/distributed apps.
+_unique_ ID function 
+used by mobile-first/distributed apps.
+
+![Snowflake-intro-image](https://github.com/dwyl/mvp/assets/194400/3ae84c13-3493-4012-b667-8af9377a66b6)
+
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/cid/ci.yml?label=build&style=flat-square&branch=main)
+[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/cid/main.svg?style=flat-square)](http://codecov.io/github/dwyl/cid?branch=main)
+[![Hex.pm](https://img.shields.io/hexpm/v/excid?color=brightgreen&style=flat-square)](https://hex.pm/packages/cid)
+[![Libraries.io dependency status](https://img.shields.io/librariesio/release/hex/cid?logoColor=brightgreen&style=flat-square)](https://libraries.io/hex/cid)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/cid/issues)
+[![HitCount](http://hits.dwyl.com/dwyl/cid.svg)](http://hits.dwyl.com/dwyl/cid)
+
+
+</div>
 
 <!-- add link to example of single-server setup using cid!
 > **Note**: `cid` can also/easily be used for centralised apps
 which do not require offline/client support.  
 -->
 
-# How to use the module
+# Why?
 
-1. Add `excid` to your list of dependencies
+We needed a way of running our App(s) across multiple servers/devices
+without fear/risk of collisions in the IDs of records.
+
+# How?
+
+1. Add `excid` to your list of `deps` in your `mix.exs` file:
 
 ```elixir
 def deps do
@@ -24,7 +40,7 @@ def deps do
 end
 ```
 
-and run `mix deps.get`
+then run `mix deps.get` to download.
 
 2. Define in your mix configuration which base you want to use to create the cid.
 The value of the base should be the either `:base32` or `:base58`.
@@ -33,9 +49,11 @@ If the base is not defined then `excid` will use the `base32` by default.
 ```elixir
 config :excid, base: :base32
 ```
-3. Call the `cid/1` function with a string, map, or struct as a parameter...
 
-```
+3. Call the `cid/1` function 
+  with a `String`, `Map`, or `Struct` as the single argument:
+
+```elixir
 Cid.cid("hello")
 "zb2rhZfjRh2FHHB2RkHVEvL2vJnCTcu7kwRqgVsf9gpkLgteo"
 
@@ -43,24 +61,22 @@ Cid.cid(%{key: "value"})
 "zb2rhn1C6ZDoX6rdgiqkqsaeK7RPKTBgEi8scchkf3xdsi8Bj"
 ```
 
-If the parameter is not one of the ones listed above then the function will
-return `"invalid data type"`.
+If the argument is not one of the ones listed above 
+then the function will return `"invalid data type"`.
 
-```
+```elixir
 Cid.cid([])
 "invalid data type"
 ```
 
-# Why?
-
-We needed a way of running our App(s) across multiple servers/devices
-without fear/risk of collisions in the IDs of records.
+# What?
 
 The goal is to allow records to be created _offline_ (_e.g: on a mobile device_)
 with the ID generated on the _client_ and when the record is synched/saved
 to the server (database) it can be _verified_
 and the ID does not need to change.
-Furthermore because the ID is based
+Furthermore because the ID is based on a cryptographic hash
+there is virtually zero chance of collision. 
 
 We _could_ have used "_Ye olde_" **UUID** (_random/nondeterministic_)
 as the IDs and achieve the desired collision-avoidance,
