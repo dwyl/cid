@@ -18,7 +18,15 @@ jobs:
       with:
         go-version: ${{ env.GO_VERSION }}
     - name: Install Go IPFS
-      run: echo "downloading go"
+      run: |
+        echo "downloading go"
+        curl https://dist.ipfs.io/go-ipfs/v0.4.18/go-ipfs_v0.4.18_linux-386.tar.gz --output go-ipfs.tar.gz
+        tar xvfz go-ipfs.tar.gz
+        cd go-ipfs
+        sudo ./install.sh
+        cd ..
+        ipfs init
+
     - uses: actions/checkout@v2
     - name: Set up Elixir
       uses: erlef/setup-beam@v1
