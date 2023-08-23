@@ -40,7 +40,7 @@ defmodule Cid.MixProject do
   end
 
   defp description() do
-    "cid (\"content id\") is a human-friendly (readable/typeable) unique ID function built for distributed/decentralised systems."
+    "cid (\"content id\") is a human-friendly (readable/typeable) unique ID function built for distributed/decentralized systems."
   end
 
   defp package() do
