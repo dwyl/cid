@@ -4,14 +4,16 @@ defmodule Cid.MixProject do
   def project do
     [
       app: :excid,
-      version: "0.2.0",
+      version: "1.0.0",
       package: package(),
       description: description(),
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
+      aliases: aliases(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
+        c: :test,
         coveralls: :test,
         "coveralls.json": :test,
       ]
@@ -47,6 +49,13 @@ defmodule Cid.MixProject do
       licenses: ["GNU GPL v2.0"],
       maintainers: ["dwyl"],
       links: %{"GitHub" => "https://github.com/dwyl/cid"}
+    ]
+  end
+
+  defp aliases do
+    [
+      t: ["test"],
+      c: ["coveralls.html"]
     ]
   end
 end
