@@ -23,9 +23,14 @@ used by mobile-first/distributed apps.
 which do not require offline/client support.  
 -->
 
-# How to use the module
+# Why?
 
-1. Add `excid` to your list of dependencies
+We needed a way of running our App(s) across multiple servers/devices
+without fear/risk of collisions in the IDs of records.
+
+# How?
+
+1. Add `excid` to your list of `deps` in your `mix.exs` file:
 
 ```elixir
 def deps do
@@ -35,7 +40,7 @@ def deps do
 end
 ```
 
-and run `mix deps.get`
+then run `mix deps.get` to download.
 
 2. Define in your mix configuration which base you want to use to create the cid.
 The value of the base should be the either `:base32` or `:base58`.
@@ -45,7 +50,8 @@ If the base is not defined then `excid` will use the `base32` by default.
 config :excid, base: :base32
 ```
 
-3. Call the `cid/1` function with a string, map, or struct as a parameter...
+3. Call the `cid/1` function 
+  with a `String`, `Map`, or `Struct` as the single argument:
 
 ```elixir
 Cid.cid("hello")
@@ -55,18 +61,15 @@ Cid.cid(%{key: "value"})
 "zb2rhn1C6ZDoX6rdgiqkqsaeK7RPKTBgEi8scchkf3xdsi8Bj"
 ```
 
-If the parameter is not one of the ones listed above then the function will
-return `"invalid data type"`.
+If the argument is not one of the ones listed above 
+then the function will return `"invalid data type"`.
 
 ```elixir
 Cid.cid([])
 "invalid data type"
 ```
 
-# Why?
-
-We needed a way of running our App(s) across multiple servers/devices
-without fear/risk of collisions in the IDs of records.
+# What?
 
 The goal is to allow records to be created _offline_ (_e.g: on a mobile device_)
 with the ID generated on the _client_ and when the record is synched/saved
