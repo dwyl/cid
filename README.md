@@ -6,6 +6,8 @@
 _unique_ ID function 
 used by mobile-first/distributed apps.
 
+![Snowflake-intro-image](https://github.com/dwyl/mvp/assets/194400/3ae84c13-3493-4012-b667-8af9377a66b6)
+
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/cid/ci.yml?label=build&style=flat-square&branch=main)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/cid/main.svg?style=flat-square)](http://codecov.io/github/dwyl/cid?branch=main)
 [![Hex.pm](https://img.shields.io/hexpm/v/cid?color=brightgreen&style=flat-square)](https://hex.pm/packages/cid)
@@ -13,7 +15,6 @@ used by mobile-first/distributed apps.
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/cid/issues)
 [![HitCount](http://hits.dwyl.com/dwyl/cid.svg)](http://hits.dwyl.com/dwyl/cid)
 
-![swiss-army-knife](https://user-images.githubusercontent.com/194400/94815682-b646e300-03f2-11eb-8069-46b9e10fac7e.png)
 
 </div>
 
