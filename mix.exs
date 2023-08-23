@@ -35,7 +35,7 @@ defmodule Cid.MixProject do
       {:b58, "~> 0.1.1"},
       {:excoveralls, "~> 0.10", only: :test},
       {:stream_data, "~> 0.4.2", only: :test},
-      {:ex_doc, "~> 0.19.3", only: :dev}
+      {:ex_doc, "~> 0.30.3", only: :dev}
     ]
   end
 
