@@ -75,7 +75,8 @@ The goal is to allow records to be created _offline_ (_e.g: on a mobile device_)
 with the ID generated on the _client_ and when the record is synched/saved
 to the server (database) it can be _verified_
 and the ID does not need to change.
-Furthermore because the ID is based
+Furthermore because the ID is based on a cryptographic hash
+there is virtually zero chance of collision. 
 
 We _could_ have used "_Ye olde_" **UUID** (_random/nondeterministic_)
 as the IDs and achieve the desired collision-avoidance,
