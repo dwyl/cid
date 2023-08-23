@@ -17,13 +17,6 @@ used by mobile-first/distributed apps.
 
 </div>
 
-
-# `cid`
-[![Hex pm](http://img.shields.io/hexpm/v/excid.svg?style=flat)](https://hex.pm/packages/excid)
-[![Build Status](https://travis-ci.org/dwyl/cid.svg?branch=master)](https://travis-ci.org/dwyl/cid)
-[![codecov](https://codecov.io/gh/dwyl/cid/branch/master/graph/badge.svg)](https://codecov.io/gh/dwyl/cid)
-
-
 <!-- add link to example of single-server setup using cid!
 > **Note**: `cid` can also/easily be used for centralised apps
 which do not require offline/client support.  
@@ -50,9 +43,10 @@ If the base is not defined then `excid` will use the `base32` by default.
 ```elixir
 config :excid, base: :base32
 ```
+
 3. Call the `cid/1` function with a string, map, or struct as a parameter...
 
-```
+```elixir
 Cid.cid("hello")
 "zb2rhZfjRh2FHHB2RkHVEvL2vJnCTcu7kwRqgVsf9gpkLgteo"
 
@@ -63,7 +57,7 @@ Cid.cid(%{key: "value"})
 If the parameter is not one of the ones listed above then the function will
 return `"invalid data type"`.
 
-```
+```elixir
 Cid.cid([])
 "invalid data type"
 ```
