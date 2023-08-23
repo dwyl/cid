@@ -123,7 +123,7 @@ defmodule Cid do
   # Takes a binary, a base and return the encoded binary in the base.
   defp encode_with_base(binary, base) do
     case base do
-      :base58 -> {:ok, Base58Encode.encode(binary)}
+      :base58 -> {:ok, Base58.encode(binary)}
 
       :base32 -> {:ok, Base.encode32(binary, case: :lower, padding: false)}
 

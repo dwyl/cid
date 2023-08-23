@@ -32,7 +32,7 @@ defmodule Cid.MixProject do
     [
       {:ex_multihash, "~> 2.0"},
       {:jason, "~> 1.1"},
-      {:b58, "~> 0.1.1"},
+      {:b58, "~> 1.0.3"},
       {:excoveralls, "~> 0.10", only: :test},
       {:stream_data, "~> 0.6.0", only: :test},
       {:ex_doc, "~> 0.30.3", only: :dev}
