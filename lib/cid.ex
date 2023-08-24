@@ -16,36 +16,37 @@ defmodule Cid do
   """
 
   @doc """
-  Returns a CID that identical to one returned by IPFS if given the same data.
-  Can take a String, Map or Struct as an argument.
+  `cid/1` Returns a Content ID (CID)
+  identical to the `cid` returned by `IPFS` for the same input data.if given the same data.
+  accepts a String, Map or Struct as an argument.
 
   ## Examples
 
-    iex> Application.put_env(:excid, :base, :base32)
-    iex> Cid.cid("hello")
-    "bafkreibm6jg3ux5qumhcn2b3flc3tyu6dmlb4xa7u5bf44yegnrjhc4yeq"
+      iex> Application.put_env(:excid, :base, :base32)
+      iex> Cid.cid("hello")
+      "bafkreibm6jg3ux5qumhcn2b3flc3tyu6dmlb4xa7u5bf44yegnrjhc4yeq"
 
-    iex> Application.put_env(:excid, :base, :base58)
-    iex> Cid.cid("hello")
-    "zb2rhZfjRh2FHHB2RkHVEvL2vJnCTcu7kwRqgVsf9gpkLgteo"
+      iex> Application.put_env(:excid, :base, :base58)
+      iex> Cid.cid("hello")
+      "zb2rhZfjRh2FHHB2RkHVEvL2vJnCTcu7kwRqgVsf9gpkLgteo"
 
-    iex> Application.put_env(:excid, :base, :base32)
-    iex> Cid.cid(%{key: "value"})
-    "bafkreihehk6pgn2sisbzyajpsyz7swdc2izkswya2w6hgsftbgfz73l7gi"
+      iex> Application.put_env(:excid, :base, :base32)
+      iex> Cid.cid(%{key: "value"})
+      "bafkreihehk6pgn2sisbzyajpsyz7swdc2izkswya2w6hgsftbgfz73l7gi"
 
-    iex> Application.put_env(:excid, :base, :base58)
-    iex> Cid.cid(%{key: "value"})
-    "zb2rhn1C6ZDoX6rdgiqkqsaeK7RPKTBgEi8scchkf3xdsi8Bj"
+      iex> Application.put_env(:excid, :base, :base58)
+      iex> Cid.cid(%{key: "value"})
+      "zb2rhn1C6ZDoX6rdgiqkqsaeK7RPKTBgEi8scchkf3xdsi8Bj"
 
-    iex> Cid.cid(1234)
-    "invalid data type"
+      iex> Cid.cid(1234)
+      "invalid data type"
 
-    iex> Cid.cid([1,2,3,"four"])
-    "invalid data type"
+      iex> Cid.cid([1,2,3,"four"])
+      "invalid data type"
 
-    iex> Application.put_env(:excid, :base, :wrong_base)
-    iex> Cid.cid("hello")
-    "invalid base"
+      iex> Application.put_env(:excid, :base, :wrong_base)
+      iex> Cid.cid("hello")
+      "invalid base"
   """
   @spec cid(String.t | map() | struct()) :: String.t
   def cid(value) do
