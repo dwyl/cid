@@ -36,7 +36,7 @@ without fear/risk of collisions in the IDs of records.
 ```elixir
 def deps do
   [
-    {:excid, "~> 0.1.0"}
+    {:excid, "~> 1.0.1"}
   ]
 end
 ```
