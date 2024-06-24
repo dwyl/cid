@@ -4,7 +4,7 @@ defmodule Cid.MixProject do
   def project do
     [
       app: :excid,
-      version: "1.0.1",
+      version: "1.0.2",
       package: package(),
       description: description(),
       elixir: "~> 1.7",
