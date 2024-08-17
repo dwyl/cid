@@ -13,7 +13,8 @@ jobs:
     steps:
     - name: Install Go IPFS
       run: |
-        curl https://dist.ipfs.io/go-ipfs/v0.4.18/go-ipfs_v0.4.18_linux-386.tar.gz --output go-ipfs.tar.gz
+        # curl https://dist.ipfs.io/go-ipfs/v0.4.18/go-ipfs_v0.4.18_linux-386.tar.gz --output go-ipfs.tar.gz
+        curl https://dist.ipfs.tech/go-ipfs/v0.29.0/go-ipfs_v0.29.0_linux-386.tar.gz --output go-ipfs.tar.gz
         tar xvfz go-ipfs.tar.gz
         cd go-ipfs
         sudo ./install.sh
