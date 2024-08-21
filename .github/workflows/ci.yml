@@ -13,7 +13,7 @@ jobs:
     steps:
     - name: Install Go IPFS
       run: |
-        curl https://dist.ipfs.io/go-ipfs/v0.4.18/go-ipfs_v0.4.18_linux-386.tar.gz --output go-ipfs.tar.gz
+        curl https://dist.ipfs.tech/go-ipfs/v0.4.18/go-ipfs_v0.4.18_linux-386.tar.gz --output go-ipfs.tar.gz
         tar xvfz go-ipfs.tar.gz
         cd go-ipfs
         sudo ./install.sh
@@ -36,5 +36,7 @@ jobs:
       run: mix deps.get
     - name: Run Tests
       run: mix coveralls.json
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v4.0.1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
